@@ -8,6 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- 地図の見た目。mt-e を mt-c / mt-d に変えれば 夜 / 紙 に切り替わる -->
+<link href="map-themes.css?v=1" rel="stylesheet">
 <style>
 :root{
   --bg:#fdfcf8;
@@ -57,20 +59,6 @@ body{background:var(--bg);color:var(--ink);font-family:var(--jp);line-height:1.9
 .mhead h2{font-weight:900;font-size:26px;letter-spacing:.06em;color:var(--sea)}
 .mhead span{font-family:var(--en);font-weight:700;font-size:11px;letter-spacing:.18em;color:var(--sea);opacity:.6}
 .map{margin-top:var(--s3)}
-.map svg{width:100%;height:auto;display:block;overflow:visible}
-.map .sea{fill:none}
-.map .waves path{stroke:#fff;stroke-width:3;fill:none;stroke-linecap:round;opacity:.75}
-.map .land,.map .isle{fill:var(--sand);stroke:#fff;stroke-width:2.4;vector-effect:non-scaling-stroke}
-.map .place{font-family:var(--jp);font-weight:500;font-size:12px;fill:#6f8b8c;letter-spacing:.1em}
-.map .pin{cursor:pointer}
-.map .pinbg{fill:var(--sea);stroke:#fff;stroke-width:2}
-.map .pintx{font-family:var(--jp);font-weight:700;font-size:13px;fill:#fff}
-.map .pin:hover .pinbg{fill:var(--leaf)}
-.map .lead2{stroke:var(--sea);stroke-width:1;opacity:.45}
-.map .vring{fill:none;stroke:#c0562f;stroke-width:2}
-.map .vdot{fill:#c0562f}
-.map .vtx{font-family:var(--jp);font-weight:700;font-size:14px;fill:#a4471f;letter-spacing:.06em;
-  paint-order:stroke;stroke:var(--sea-pale);stroke-width:5px;stroke-linejoin:round}
 .maphint{margin-top:var(--s3);font-size:12px;color:#6f8b8c}
 
 /* ---- 横スクロールの大きなカード ---- */
@@ -99,6 +87,8 @@ body{background:var(--bg);color:var(--ink);font-family:var(--jp);line-height:1.9
   transition:background .15s,color .15s}
 .cell:hover{background:var(--ink);color:var(--bg)}
 .cell:hover .m,.cell:hover p{color:inherit;opacity:.85}
+.cell .no{font-family:var(--en);font-weight:700;font-size:11px;letter-spacing:.14em;color:var(--sea);margin-bottom:6px}
+.cell:hover .no{color:var(--sand)}
 .cell h3{font-weight:700;font-size:16px;line-height:1.6}
 .cell .m{margin-top:4px;font-family:var(--en);font-weight:700;font-size:10.5px;letter-spacing:.14em;color:var(--sea)}
 .cell p{margin-top:var(--s2);font-size:12.5px;line-height:1.95;color:var(--ink2);
@@ -143,8 +133,8 @@ footer .c{margin-top:var(--s5);font-size:10px;opacity:.4}
 
 <section class="mapsec"><div class="wrap">
   <div class="mhead"><h2>地図</h2><span>THE MAP</span></div>
-  <div class="map" id="map"></div>
-  <p class="maphint">ピンをタップすると、その場所の紹介が開きます</p>
+  <div class="map mt-e" id="map"></div>
+  <p class="maphint">番号をタップすると、その場所の紹介が開きます。番号は下の一覧と同じです</p>
 </div></section>
 
 <section class="pick">
@@ -183,13 +173,13 @@ const M = window.OKI;
 renderMap(document.getElementById("map"), { pins:"none" });
 const svg = document.querySelector("#map svg");
 const seed = [{ x:M.venue.x, y:M.venue.y }];
-for(let d = 28; d <= 160; d += 28) seed.push({ x:M.venue.x + d, y:M.venue.y });
-const pos = spread(M.spots, 33, seed);
+for(let d = 26; d <= 160; d += 26) seed.push({ x:M.venue.x + d, y:M.venue.y });
+const pos = spread(M.spots, 28, seed);
 svg.insertAdjacentHTML("beforeend", `<g class="pins">${pos.map((q,i) => `
   <g class="pin" data-i="${i}">
-    ${q.moved > 3 ? `<line class="lead2" x1="${q.ox.toFixed(1)}" y1="${q.oy.toFixed(1)}" x2="${q.x.toFixed(1)}" y2="${q.y.toFixed(1)}"/>` : ""}
-    <circle class="pinbg" cx="${q.x.toFixed(1)}" cy="${q.y.toFixed(1)}" r="14"/>
-    <text class="pintx" x="${q.x.toFixed(1)}" y="${(q.y+4.6).toFixed(1)}" text-anchor="middle">${catChar(M.spots[i].cat)}</text>
+    ${q.moved > 3 ? `<line class="ld" x1="${q.ox.toFixed(1)}" y1="${q.oy.toFixed(1)}" x2="${q.x.toFixed(1)}" y2="${q.y.toFixed(1)}"/>` : ""}
+    <circle class="pinbg" cx="${q.x.toFixed(1)}" cy="${q.y.toFixed(1)}" r="12.5"/>
+    <text class="pintx" x="${q.x.toFixed(1)}" y="${(q.y+4.2).toFixed(1)}" text-anchor="middle">${String(i+1).padStart(2,"0")}</text>
   </g>`).join("")}</g>`);
 
 const PICKS = [[0,"photos/p6.jpg"],[5,"photos/p3.jpg"],[12,"photos/p1.jpg"],[21,"photos/p5.jpg"]];
@@ -205,6 +195,7 @@ document.getElementById("rail").innerHTML = PICKS.map(([i,src]) => {
 
 renderList(document.getElementById("list"), (s,i) => `
   <div class="cell" data-i="${i}">
+    <div class="no">${String(i+1).padStart(2,"0")}</div>
     <h3>${s.name}</h3>
     <div class="m">${s.area} / ${s.cat}${s.min ? " / 車"+s.min+"分" : ""}</div>
     <p>${s.comment || ""}</p>
