@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>B｜写真 ｜ ふたりのすきな沖縄</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sand:#f3f0ea;
+  --white:#fbfaf7;
+  --ink:#2a2a26;
+  --ink2:#6b6b62;
+  --ink3:#a3a399;
+  --line:#e2ded5;
+  --sea:#e8eeee;
+  --land:#efece4;
+  --jp:"Zen Maru Gothic",system-ui,sans-serif;
+  --en:"Quicksand",system-ui,sans-serif;
+  --s1:8px;--s2:16px;--s3:24px;--s4:40px;--s5:72px;--s6:120px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--sand);color:var(--ink);font-family:var(--jp);line-height:2;letter-spacing:.02em;-webkit-font-smoothing:antialiased}
+.wrap{max-width:720px;margin:0 auto;padding:0 26px}
+img{display:block;max-width:100%}
+
+/* ---- ヒーロー：写真いっぱい ---- */
+.hero{position:relative;height:100svh;min-height:520px;overflow:hidden;color:#fff}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(18,24,26,.30) 0%,rgba(18,24,26,0) 30%,rgba(18,24,26,.10) 48%,rgba(18,24,26,.42) 72%,rgba(18,24,26,.72) 100%)}
+.hero .top{position:absolute;top:0;left:0;right:0;z-index:2;padding:22px 26px;display:flex;justify-content:space-between;align-items:baseline}
+.hero .top b{font-weight:500;font-size:12px;letter-spacing:.22em}
+.hero .top span{font-family:var(--en);font-weight:600;font-size:11px;letter-spacing:.2em;opacity:.85}
+.hero .btm{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:0 26px 46px}
+.hero .eb{font-family:var(--en);font-weight:600;font-size:10.5px;letter-spacing:.3em;opacity:.8}
+.hero h1{margin-top:var(--s3);font-weight:500;font-size:clamp(30px,8.6vw,50px);line-height:1.62;letter-spacing:.16em}
+.hero .lead{margin-top:var(--s3);max-width:22em;font-size:13px;line-height:2.2;opacity:.9;letter-spacing:.06em}
+.hero .scroll{position:absolute;left:50%;bottom:16px;z-index:2;width:1px;height:26px;background:rgba(255,255,255,.6);animation:dr 2.4s ease-in-out infinite}
+@keyframes dr{0%,100%{transform:scaleY(.3);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}}
+
+/* ---- 見出し ---- */
+.head{text-align:center;padding-top:var(--s5)}
+.head .en{font-family:var(--en);font-weight:600;font-size:10.5px;letter-spacing:.3em;color:var(--ink3)}
+.head h2{margin-top:var(--s2);font-weight:500;font-size:20px;letter-spacing:.2em}
+.head .rule{width:1px;height:34px;background:var(--line);margin:var(--s3) auto 0}
+
+/* ---- 地図 ---- */
+.mapsec{padding-bottom:var(--s5)}
+.map{margin-top:var(--s4)}
+.map svg{width:100%;height:auto;display:block;overflow:visible}
+.map .sea{fill:none}
+.map .waves path{stroke:#cfd9d9;stroke-width:2;fill:none;stroke-linecap:round}
+.map .land,.map .isle{fill:var(--land);stroke:#cfcabd;stroke-width:1;vector-effect:non-scaling-stroke}
+.map .place{font-family:var(--jp);font-size:12px;fill:var(--ink3);letter-spacing:.1em}
+.map .pin{cursor:pointer}
+.map .pinbg{fill:var(--ink);opacity:.82;transition:opacity .2s}
+.map .pin:hover .pinbg{opacity:1}
+.map .lead2{stroke:var(--ink3);stroke-width:.6}
+.map .vring{fill:none;stroke:#b98d63;stroke-width:1}
+.map .vdot{fill:#b98d63}
+.map .vtx{font-family:var(--jp);font-weight:500;font-size:13px;fill:#8d6844;letter-spacing:.1em;paint-order:stroke;stroke:var(--sand);stroke-width:5px;stroke-linejoin:round}
+.maphint{margin-top:var(--s3);text-align:center;font-size:11.5px;color:var(--ink3);letter-spacing:.06em}
+
+/* ---- 写真の帯 ---- */
+.strip{margin-top:var(--s5);display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;padding:0 26px}
+.strip::-webkit-scrollbar{display:none}
+.strip figure{flex:0 0 68%;max-width:300px;position:relative;cursor:pointer}
+.strip figure::after{content:"";position:absolute;left:0;right:0;bottom:0;height:52%;
+  background:linear-gradient(to bottom,rgba(15,20,22,0),rgba(15,20,22,.62))}
+.strip img{width:100%;aspect-ratio:4/5;object-fit:cover;filter:saturate(.92)}
+.strip figcaption{position:absolute;z-index:2;left:16px;right:16px;bottom:14px;color:#fff;font-size:13px;letter-spacing:.08em;
+  text-shadow:0 1px 12px rgba(0,0,0,.5);line-height:1.7}
+.strip figcaption em{display:block;font-style:normal;font-family:var(--en);font-size:10px;letter-spacing:.2em;opacity:.85;margin-bottom:3px}
+
+/* ---- 一覧 ---- */
+.list{padding-bottom:var(--s6)}
+.item{padding:var(--s4) 0;border-bottom:1px solid var(--line);cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:var(--s3);align-items:start}
+.item:first-child{border-top:1px solid var(--line)}
+.item h3{font-weight:500;font-size:17px;line-height:1.7;letter-spacing:.08em}
+.item .m{margin-top:var(--s1);font-family:var(--en);font-weight:600;font-size:10px;letter-spacing:.18em;color:var(--ink3)}
+.item p{margin-top:var(--s2);font-size:13px;line-height:2.15;color:var(--ink2);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.item .ar{font-family:var(--en);font-size:15px;color:var(--ink3);padding-top:4px}
+
+footer{background:var(--ink);color:var(--white);padding:var(--s6) 0}
+footer .in{text-align:center}
+footer .m{font-size:13px;letter-spacing:.14em;opacity:.75}
+footer .n{margin-top:var(--s3);font-family:var(--en);font-weight:500;font-size:17px;letter-spacing:.2em}
+footer .d{margin-top:var(--s1);font-family:var(--en);font-size:10.5px;letter-spacing:.22em;opacity:.55}
+footer .c{margin-top:var(--s5);font-size:10px;opacity:.4;letter-spacing:.04em}
+
+/* ---- シート ---- */
+.sheetbg{position:fixed;inset:0;background:rgba(25,25,22,.5);opacity:0;pointer-events:none;transition:opacity .22s;z-index:50}
+.sheetbg.on{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--white);
+  padding:var(--s4) 26px var(--s5);transform:translateY(101%);transition:transform .34s cubic-bezier(.2,.9,.25,1);
+  max-height:88vh;overflow:auto;max-width:720px;margin:0 auto}
+.sheet.on{transform:none}
+.sheet h3{font-weight:500;font-size:21px;line-height:1.65;letter-spacing:.1em}
+.sheet .m{margin-top:var(--s2);font-family:var(--en);font-weight:600;font-size:10.5px;letter-spacing:.18em;color:var(--ink3)}
+.sheet p{margin-top:var(--s3);font-size:14px;line-height:2.3;color:var(--ink2)}
+.sheet .t{margin-top:var(--s3);display:flex;flex-wrap:wrap;gap:0 14px;font-size:11.5px;color:var(--ink3)}
+.sheet .t span::before{content:"#";opacity:.5;margin-right:.1em}
+.sheet .btns{margin-top:var(--s4);display:flex;gap:var(--s3);align-items:center}
+.sheet .go{flex:1;text-align:center;text-decoration:none;background:var(--ink);color:var(--white);
+  font-size:13px;letter-spacing:.16em;padding:16px 0}
+.sheet .cl{background:none;border:0;font-family:var(--jp);font-size:12.5px;color:var(--ink3);cursor:pointer;letter-spacing:.1em}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <img src="photos/p2.jpg" alt="">
+  <div class="top"><b>ふたりのすきな沖縄</b><span>2026.10.11</span></div>
+  <div class="btm">
+    <p class="eb">The Okinawa We Love</p>
+    <h1>ふたりの<br>すきな沖縄</h1>
+    <p class="lead">観光地もそうでない場所も、二人が好きな沖縄を集めました。</p>
+  </div>
+  <div class="scroll"></div>
+</header>
+
+<section class="mapsec">
+  <div class="head">
+    <p class="en">The Map</p>
+    <h2>地図</h2>
+    <div class="rule"></div>
+  </div>
+  <div class="wrap">
+    <div class="map" id="map"></div>
+    <p class="maphint">点をタップすると、その場所の紹介が開きます</p>
+  </div>
+</section>
+
+<div class="strip" id="strip"></div>
+
+<section class="list">
+  <div class="head">
+    <p class="en">30 Places</p>
+    <h2>一覧</h2>
+    <div class="rule"></div>
+  </div>
+  <div class="wrap"><div id="list" style="margin-top:var(--s4)"></div></div>
+</section>
+
+<footer><div class="in">
+  <p class="m">沖縄で会いましょう。</p>
+  <div class="n">Hiroaki &amp; Erika</div>
+  <div class="d">2026.10.11</div>
+  <p class="c">写真は仮のものです（Wikimedia Commons）／ 地形データ © OpenStreetMap contributors</p>
+</div></footer>
+
+<div class="sheetbg" id="sheetbg"></div>
+<div class="sheet" id="sheet">
+  <h3 data-name></h3>
+  <div class="m" data-meta></div>
+  <p data-comment></p>
+  <div class="t" data-tags></div>
+  <div class="btns">
+    <a class="go" data-gmap target="_blank" rel="noopener">Googleマップで開く</a>
+    <button class="cl" data-close>閉じる</button>
+  </div>
+</div>
+
+<script src="data.js?v=2"></script>
+<script src="common.js?v=2"></script>
+<script>
+const M = window.OKI;
+renderMap(document.getElementById("map"), { pins:"none" });
+const svg = document.querySelector("#map svg");
+const seed = [{ x:M.venue.x, y:M.venue.y }];
+for(let d = 24; d <= 150; d += 24) seed.push({ x:M.venue.x + d, y:M.venue.y });
+const pos = spread(M.spots, 21, seed);
+svg.insertAdjacentHTML("beforeend", `<g class="pins">${pos.map((q,i) => `
+  <g class="pin" data-i="${i}">
+    ${q.moved > 3 ? `<line class="lead2" x1="${q.ox.toFixed(1)}" y1="${q.oy.toFixed(1)}" x2="${q.x.toFixed(1)}" y2="${q.y.toFixed(1)}"/>` : ""}
+    <circle class="pinbg" cx="${q.x.toFixed(1)}" cy="${q.y.toFixed(1)}" r="5"/>
+    <circle cx="${q.x.toFixed(1)}" cy="${q.y.toFixed(1)}" r="17" fill="transparent"/>
+  </g>`).join("")}</g>`);
+
+/* 写真の帯（いまは仮の写真。届いたら差し替え） */
+const PICKS = [[0,"photos/p6.jpg"],[5,"photos/p3.jpg"],[12,"photos/p1.jpg"],[21,"photos/p5.jpg"]];
+document.getElementById("strip").innerHTML = PICKS.map(([i,src]) => {
+  const s = M.spots[i];
+  return `<figure data-i="${i}"><img src="${src}" alt=""><figcaption><em>${s.area}</em>${s.name}</figcaption></figure>`;
+}).join("");
+
+renderList(document.getElementById("list"), (s,i) => `
+  <div class="item" data-i="${i}">
+    <div>
+      <h3>${s.name}</h3>
+      <div class="m">${s.area} / ${s.cat}${s.min ? " / 車"+s.min+"分" : ""}</div>
+      <p>${s.comment || ""}</p>
+    </div>
+    <div class="ar">→</div>
+  </div>`);
+
+wireSheet();
+</script>
+</body>
+</html>
