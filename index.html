@@ -43,37 +43,38 @@ body{background:var(--bg);color:var(--ink);font-family:var(--jp);line-height:1.9
 
 /* ================= 絞り込み（上に残る） ================= */
 .filters{position:sticky;top:0;z-index:30;background:rgba(253,252,248,.96);backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);border-top:1px solid #e6e3da;border-bottom:1px solid #e6e3da;padding:10px 0}
+  -webkit-backdrop-filter:blur(8px);border-top:1px solid #e6e3da;border-bottom:1px solid #e6e3da;padding:16px 0}
 .frow{max-width:820px;margin:0 auto;display:flex;align-items:center}
-.frow + .frow{margin-top:8px}
-.frow .lab{flex:0 0 auto;width:74px;padding-left:22px;font-size:10.5px;font-weight:700;letter-spacing:.08em;color:var(--ink3)}
-.chips{flex:1;min-width:0;display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none;padding-right:22px}
+.frow + .frow{margin-top:12px}
+.frow .lab{flex:0 0 auto;width:82px;padding-left:22px;font-size:10.5px;font-weight:700;letter-spacing:.08em;color:var(--ink3)}
+.chips{flex:1;min-width:0;display:flex;align-items:center;gap:8px;overflow-x:auto;scrollbar-width:none;padding-right:22px}
 .chips::-webkit-scrollbar{display:none}
 .chip{
   flex:0 0 auto;display:inline-flex;align-items:baseline;gap:4px;cursor:pointer;
   font-family:var(--jp);font-weight:500;font-size:12.5px;letter-spacing:.02em;white-space:nowrap;
-  color:var(--ink);background:#f1efe8;border:0;border-radius:3px;padding:6px 11px;
+  color:var(--ink);background:transparent;border:1px solid #e0ddd3;border-radius:20px;padding:5px 13px;
   -webkit-tap-highlight-color:transparent;transition:background .15s,color .15s;
 }
-.chip small{font-family:var(--en);font-weight:700;font-size:10px;color:var(--sea)}
+.chip small{font-family:var(--en);font-weight:600;font-size:10px;color:var(--ink3)}
 /* 地方の色 */
 .rs{--rg:#b8532d;--rgp:#f7e6dc}
 .rc{--rg:#1f6f78;--rgp:#dbeced}
 .rn{--rg:#4c7a44;--rgp:#e2ecdc}
-.chip.reg{align-items:center;background:var(--rgp);color:var(--rg);font-weight:700}
+.chip.reg{align-items:center;background:transparent;border-color:var(--rgp);border-width:1.5px;color:var(--rg);font-weight:700}
 .chip.reg::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--rg);margin-right:2px}
-.chip.city{background:var(--rgp);color:var(--rg)}
+.chip.city{background:transparent;border-color:var(--rgp);border-width:1.5px;color:var(--rg)}
 .chip.city small{color:var(--rg);opacity:.65}
-.chip.on{background:var(--ink);color:#fff}
+.chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
 .chip.on small{color:var(--sand);opacity:1}
-.chip.reg.on,.chip.city.on{background:var(--rg);color:#fff}
+.chip.reg.on,.chip.city.on{background:var(--rg);border-color:var(--rg);color:#fff}
 .chip.reg.on::before{background:#fff}
 .chip.city.on small{color:#fff;opacity:.8}
 b.rs,b.rc,b.rn,.rt{color:var(--rg);font-weight:700}
 h2.rt{font-weight:900}
 .chip.reg small{color:var(--rg);opacity:.65}
 .chip.reg.on small{color:#fff;opacity:.8}
-.cityrow .lab{position:relative;height:30px}
+.cityrow .lab{position:relative;height:28px}
+@media(max-width:420px){.frow .lab{width:68px;padding-left:18px}.chips{gap:6px;padding-right:18px}}
 .cityrow .lab::after{content:"";position:absolute;right:14px;top:-4px;width:12px;height:18px;border-left:2px solid var(--rg);border-bottom:2px solid var(--rg);border-bottom-left-radius:6px;opacity:.5}
 
 /* ================= 地図 ================= */
@@ -379,7 +380,7 @@ function buildFilters(){
   document.getElementById("fArea").innerHTML =
     `<button class="chip on" data-v="">すべて</button>` +
     Object.keys(REGION).map(r =>
-      `<button class="chip reg ${RCLS[r]}" data-v="${r}">${r}<small>${cnt(s => REGION[r].includes(s.city))}</small></button>`).join("");
+      `<button class="chip reg ${RCLS[r]}" data-v="${r}">${r}</button>`).join("");
 }
 
 function buildCities(){
