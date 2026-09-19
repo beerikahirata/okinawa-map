@@ -93,8 +93,8 @@ h2.rt{font-weight:900}
 .illmap.zoomed{touch-action:none}
 .illmap.dragging{cursor:grabbing}
 .illmap .leads{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;overflow:visible}
-.illmap .leads line{stroke:currentColor;stroke-width:1.2;opacity:.55}
-.illmap .leads circle{fill:currentColor}
+.illmap .leads line{stroke:var(--sea);stroke-width:1.2;opacity:.55}
+.illmap .leads circle{fill:var(--sea)}
 .illmap > svg:not(.compass):not(.leads){position:absolute;inset:0;width:100%;height:100%;display:block;transform-origin:0 0}
 
 .illmap .land path{fill:var(--sand);stroke:#fff;stroke-width:var(--sw,2.4px);stroke-linejoin:round;vector-effect:non-scaling-stroke}
@@ -838,7 +838,7 @@ function placePins(){
     }
     placed.push([x,y]);
     if(Math.hypot(x-ox, y-oy) > 8)
-      leads += `<g style="color:${RCOL[regionOf(s.city)]}"><line x1="${ox.toFixed(1)}" y1="${oy.toFixed(1)}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}"/><circle cx="${ox.toFixed(1)}" cy="${oy.toFixed(1)}" r="2.6"/></g>`;
+      leads += `<g><line x1="${ox.toFixed(1)}" y1="${oy.toFixed(1)}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}"/><circle cx="${ox.toFixed(1)}" cy="${oy.toFixed(1)}" r="2.6"/></g>`;
     el.style.left = x + "px";
     el.style.top  = y + "px";
     el.dataset.sx = x; el.dataset.sy = y;
@@ -899,7 +899,7 @@ function syncMap(list){
 
   CURRENT.forEach(s => {
     const el = document.createElement("div");
-    el.className = "pin " + RCLS[regionOf(s.city)];
+    el.className = "pin";
     el.textContent = pad(s.no);
     el.dataset.name = s.name;
     el.addEventListener("click", () => showTip(s, el));
