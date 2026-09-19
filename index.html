@@ -7,47 +7,969 @@
 <title>ふたりのすきな沖縄</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
+:root{
+  --bg:#fdfcf8;
+  --ink:#1e2b2c;
+  --ink2:#5d6c6c;
+  --ink3:#9aa5a4;
+  --sea:#1f6f78;
+  --sea-pale:#dbeced;
+  --sand:#e9dcc0;
+  --leaf:#4c7a44;
+  --venue:#c0562f;
+  --jp:"Zen Maru Gothic",system-ui,sans-serif;
+  --en:"Quicksand",system-ui,sans-serif;
+  --s1:8px;--s2:16px;--s3:24px;--s4:40px;--s5:72px;--s6:112px;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#f4f2ec;color:#252722;font-family:"Zen Maru Gothic",system-ui,sans-serif;line-height:1.95;-webkit-font-smoothing:antialiased}
-.wrap{max-width:600px;margin:0 auto;padding:0 24px}
-header{padding:80px 0 36px}
-header .en{font-family:"Quicksand",system-ui,sans-serif;font-weight:600;font-size:11px;letter-spacing:.26em;color:#9a9d93}
-header h1{margin-top:18px;font-weight:900;font-size:clamp(27px,7.6vw,38px);line-height:1.5}
-header p{margin-top:20px;font-size:13.5px;line-height:2.15;color:#5f6359}
-a.card{display:block;text-decoration:none;color:inherit;background:#fbfaf6;border:1px solid #dedad0;
-  border-radius:14px;padding:22px;margin-top:14px;transition:border-color .2s,transform .2s}
-a.card:hover{border-color:#8d9384;transform:translateY(-2px)}
-a.card h2{font-weight:700;font-size:18px;letter-spacing:.04em}
-a.card .en{margin-top:3px;font-family:"Quicksand",system-ui,sans-serif;font-weight:600;font-size:10.5px;letter-spacing:.18em;color:#9a9d93}
-a.card p{margin-top:12px;font-size:13px;line-height:2;color:#5f6359}
-.note{margin:36px 0 96px;padding-top:20px;border-top:1px solid #dedad0;font-size:12px;line-height:2;color:#9a9d93}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--jp);line-height:1.95;letter-spacing:.02em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:820px;margin:0 auto;padding:0 22px}
+
+/* ================= ヒーロー（縦書き） ================= */
+.hero{min-height:74svh;display:flex;padding:var(--s5) 0 var(--s5)}
+.hero .in{max-width:820px;margin:0 auto;padding:0 22px;width:100%;display:flex;justify-content:space-between;gap:var(--s4)}
+.hero .side{display:flex;flex-direction:column;justify-content:space-between;padding-bottom:var(--s1)}
+.hero .eb{font-family:var(--en);font-weight:700;font-size:11px;letter-spacing:.24em;color:var(--sea)}
+.hero .lead{max-width:13.5em;font-size:13.5px;line-height:2.3;color:var(--ink2);letter-spacing:.05em}
+.tate{
+  writing-mode:vertical-rl;text-orientation:mixed;
+  font-weight:700;font-size:clamp(32px,9.8vw,56px);line-height:1.8;letter-spacing:.22em;
+}
+.tate span{color:var(--sea)}
+
+/* ================= 絞り込み（上に残る） ================= */
+.filters{position:sticky;top:0;z-index:30;background:rgba(253,252,248,.96);backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);border-top:1px solid #e6e3da;border-bottom:1px solid #e6e3da;padding:10px 0}
+.frow{max-width:820px;margin:0 auto;display:flex;align-items:center}
+.frow + .frow{margin-top:8px}
+.frow .lab{flex:0 0 auto;width:74px;padding-left:22px;font-size:10.5px;font-weight:700;letter-spacing:.08em;color:var(--ink3)}
+.chips{flex:1;min-width:0;display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none;padding-right:22px}
+.chips::-webkit-scrollbar{display:none}
+.chip{
+  flex:0 0 auto;display:inline-flex;align-items:baseline;gap:4px;cursor:pointer;
+  font-family:var(--jp);font-weight:500;font-size:12.5px;letter-spacing:.02em;white-space:nowrap;
+  color:var(--ink);background:#f1efe8;border:0;border-radius:3px;padding:6px 11px;
+  -webkit-tap-highlight-color:transparent;transition:background .15s,color .15s;
+}
+.chip small{font-family:var(--en);font-weight:700;font-size:10px;color:var(--sea)}
+.chip.reg{background:var(--sea-pale);color:var(--sea);font-weight:700}
+.chip.on{background:var(--ink);color:#fff}
+.chip.on small{color:var(--sand)}
+.chips .div{flex:0 0 auto;width:1px;height:18px;background:#dcd8cd;margin:0 4px}
+
+/* ================= 地図 ================= */
+.mapsec{background:var(--sea-pale);padding:var(--s4) 0 var(--s4)}
+.hd{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s2)}
+.hd h2{font-weight:900;font-size:26px;letter-spacing:.06em}
+.hd span{font-family:var(--en);font-weight:700;font-size:11px;letter-spacing:.18em;color:var(--ink3)}
+.mapsec .hd h2{color:var(--sea)}
+.mapsec .hd span{color:var(--sea);opacity:.6}
+.mapbox{margin-top:var(--s3);border-radius:14px;overflow:hidden;background:var(--sea-pale);border:2px solid #fff}
+.maphint{margin-top:var(--s2);font-size:12px;line-height:1.9;color:#6f8b8c}
+
+.illmap{
+  position:relative;width:100%;aspect-ratio:724/900;overflow:hidden;
+  touch-action:pan-y;cursor:grab;-webkit-user-select:none;user-select:none;
+}
+.illmap.zoomed{touch-action:none}
+.illmap.dragging{cursor:grabbing}
+.illmap .leads{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;overflow:visible}
+.illmap .leads line{stroke:var(--sea);stroke-width:1.2;opacity:.55}
+.illmap .leads circle{fill:var(--sea)}
+.illmap > svg:not(.compass):not(.leads){position:absolute;inset:0;width:100%;height:100%;display:block;transform-origin:0 0}
+
+.illmap .land path{fill:var(--sand);stroke:#fff;stroke-width:var(--sw,2.4px);stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.illmap .landshadow{display:none}
+.illmap .placenames text{font-family:var(--jp);font-weight:500;font-size:calc(14px / var(--k,1));letter-spacing:.1em;fill:#6f8b8c}
+.illmap .placenames text.lv2{opacity:0;transition:opacity .3s;font-size:calc(12.5px / var(--k,1))}
+.illmap.detail .placenames text.lv2{opacity:.85}
+.illmap .airport circle{fill:#fff;stroke:var(--sea);stroke-width:1.6;vector-effect:non-scaling-stroke}
+.illmap .airport path{stroke:var(--sea)}
+.illmap .airport text{font-family:var(--jp);font-weight:500;font-size:12.5px;letter-spacing:.08em;fill:#6f8b8c}
+.illmap .compass{position:absolute;right:12px;bottom:12px;z-index:7;width:48px;height:48px;pointer-events:none;overflow:visible}
+.illmap .compass circle{stroke:var(--sea);opacity:.35}
+.illmap .compass path{fill:var(--sea);opacity:.5}
+.illmap .compass text{font-family:var(--en);font-weight:700;font-size:12px;fill:var(--sea);opacity:.55}
+
+.mapctl{position:absolute;right:10px;top:10px;z-index:8;display:flex;flex-direction:column;gap:6px}
+.mapctl button{
+  width:36px;height:36px;border-radius:50%;cursor:pointer;border:0;background:#fff;color:var(--sea);
+  font-family:var(--en);font-weight:700;font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 1px 4px rgba(31,111,120,.18);-webkit-tap-highlight-color:transparent;
+}
+.mapctl button:active{background:var(--sea);color:#fff}
+.mapctl button.reset{font-family:var(--jp);font-size:11px}
+.zoomhint{position:absolute;left:12px;top:12px;z-index:8;pointer-events:none;font-family:var(--en);font-weight:700;font-size:11px;color:var(--sea);opacity:.6}
+
+.pin{
+  position:absolute;transform:translate(-50%,-50%);z-index:3;
+  width:26px;height:26px;border-radius:50%;background:var(--sea);border:2px solid #fff;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  font-family:var(--en);font-weight:700;font-size:11px;color:#fff;letter-spacing:0;
+  box-shadow:0 1px 4px rgba(20,60,64,.25);
+  transition:transform .2s cubic-bezier(.19,1,.22,1),background .15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.illmap:not(.detail) .pin:not(.venue){width:19px;height:19px;font-size:8.5px;border-width:1.5px}
+.pin.act{transform:translate(-50%,-50%) scale(1.22);z-index:6;background:var(--leaf)}
+.pin.venue{width:34px;height:34px;background:#fff;border:3px solid var(--venue);color:var(--venue);
+  font-family:var(--jp);font-size:10px;z-index:4;cursor:default}
+.plabel{
+  position:absolute;z-index:2;transform:translate(0,-50%);pointer-events:none;white-space:nowrap;
+  font-size:11px;font-weight:500;letter-spacing:.02em;color:var(--ink);
+  background:#fff;border-radius:3px;padding:2px 7px;box-shadow:0 1px 3px rgba(20,60,64,.12);
+  opacity:0;transition:opacity .25s;max-width:150px;overflow:hidden;text-overflow:ellipsis;
+}
+.illmap.detail .plabel{opacity:1}
+.plabel.left{transform:translate(-100%,-50%)}
+
+/* ================= 一覧 ================= */
+.list{padding:var(--s4) 0 var(--s6)}
+.list .hd{margin-bottom:var(--s3)}
+.list .hd .r{display:flex;align-items:baseline;gap:var(--s2)}
+#resetBtn{background:none;border:0;border-bottom:1px solid var(--ink3);font-family:var(--jp);font-size:12px;color:var(--ink2);cursor:pointer;padding:0 0 1px}
+.grid{display:grid;gap:var(--s2)}
+@media(min-width:900px){.grid{grid-template-columns:1fr 1fr}}
+.cell{border:2px solid var(--ink);border-radius:3px;padding:var(--s3);cursor:pointer;background:var(--bg);transition:background .15s,color .15s}
+@media(hover:hover){
+  .cell:hover{background:var(--ink);color:var(--bg)}
+  .cell:hover .m,.cell:hover p{color:inherit;opacity:.85}
+  .cell:hover .no{color:var(--sand)}
+}
+.cell .no{font-family:var(--en);font-weight:700;font-size:11px;letter-spacing:.14em;color:var(--sea);margin-bottom:6px}
+.cell h3{font-weight:700;font-size:16px;line-height:1.6}
+.cell .m{margin-top:4px;font-size:11.5px;font-weight:500;letter-spacing:.06em;color:var(--sea)}
+.cell p{margin-top:var(--s2);font-size:12.5px;line-height:1.95;color:var(--ink2);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.empty{padding:var(--s4) 0;text-align:center;font-size:13px;color:var(--ink3)}
+
+/* ================= 詳細シート ================= */
+.sheet-bg{position:fixed;inset:0;background:rgba(20,32,32,.5);z-index:60;opacity:0;transition:opacity .25s}
+.sheet-bg.on{opacity:1}
+.sheet{
+  position:fixed;left:50%;bottom:0;transform:translate(-50%,100%);
+  width:min(560px,100%);max-height:88vh;overflow-y:auto;z-index:61;background:var(--bg);
+  border-top:3px solid var(--ink);transition:transform .32s cubic-bezier(.19,1,.22,1);
+}
+.sheet.on{transform:translate(-50%,0)}
+.sheet .grab{width:40px;height:4px;border-radius:4px;background:#dcd8cd;margin:10px auto 0}
+.sheet .photo{margin:16px 22px 0;border-radius:3px;overflow:hidden;background:var(--sea-pale);aspect-ratio:4/3}
+.sheet .photo img{width:100%;height:100%;object-fit:cover;display:block}
+.sheet .cred{margin:6px 22px 0;font-size:9.5px;color:var(--ink3);text-align:right}
+.sheet .body{padding:22px 22px 32px}
+.sheet .sno{font-family:var(--en);font-weight:700;font-size:12px;letter-spacing:.14em;color:var(--sea)}
+.sheet h3{margin-top:4px;font-weight:900;font-size:21px;line-height:1.55}
+.sheet .meta{margin-top:8px;display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:12px;font-weight:500;color:var(--sea)}
+.sheet .meta i{display:none}
+.sheet .meta .sep{opacity:.4}
+.sheet .desc{margin-top:var(--s3);font-size:14px;line-height:2.2;color:var(--ink2)}
+.sheet .tags{margin-top:var(--s2);display:flex;flex-wrap:wrap;gap:6px}
+.sheet .tag{font-size:11px;background:var(--sea-pale);color:var(--sea);padding:4px 10px;border-radius:2px}
+.sheet .web{display:inline-block;margin-top:var(--s3);font-size:12.5px;color:var(--sea);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px}
+.sheet .acts{margin-top:var(--s4);display:flex;gap:10px}
+.sheet .acts a,.sheet .acts button{
+  flex:1;text-align:center;font-family:var(--jp);font-weight:700;font-size:13.5px;letter-spacing:.04em;
+  padding:15px 10px;border-radius:3px;text-decoration:none;cursor:pointer;border:2px solid var(--ink);
+}
+.sheet .acts .go{flex:1.6;background:var(--ink);color:var(--bg)}
+.sheet .acts .close{background:var(--bg);color:var(--ink)}
+@media(min-width:600px){
+  .sheet{bottom:auto;top:50%;transform:translate(-50%,-44%);opacity:0;border:3px solid var(--ink);border-radius:4px;pointer-events:none;transition:transform .3s cubic-bezier(.19,1,.22,1),opacity .2s}
+  .sheet.on{transform:translate(-50%,-50%);opacity:1;pointer-events:auto}
+  .sheet .grab{display:none}
+}
+
+/* ================= footer ================= */
+footer{background:var(--ink);color:var(--bg);padding:var(--s5) 0 var(--s5);text-align:center}
+footer .m{font-size:13.5px;letter-spacing:.1em;opacity:.8}
+footer .n{margin-top:var(--s2);font-family:var(--en);font-weight:700;font-size:clamp(26px,8vw,44px);letter-spacing:.01em}
+footer .c{margin-top:var(--s4);font-size:10px;opacity:.4}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<header class="wrap">
-  <p class="en">Work in progress</p>
-  <h1>ふたりのすきな沖縄</h1>
-  <p>2026.10.11 の結婚式に来てくださるみなさんへ、二人のおすすめを集めたページです。まだ作っている途中で、いまはデザインを選んでいるところです。</p>
+
+<header class="hero">
+  <div class="in">
+    <div class="side">
+      <p class="eb">The Okinawa We Love</p>
+      <p class="lead">観光地も<br>そうでない場所も、<br>二人が好きな沖縄を<br>集めました。</p>
+    </div>
+    <h1 class="tate">ふたりの<span>すきな沖縄</span></h1>
+  </div>
 </header>
 
-<div class="wrap">
-  <a class="card" href="concepts/">
-    <h2>デザイン5案を見くらべる</h2>
-    <p class="en">5 Design Directions</p>
-    <p>中身は同じで、見た目だけを5通り作ったものです。いまはここから選んでいます。</p>
-  </a>
-  <a class="card" href="now.html">
-    <h2>いまの案</h2>
-    <p class="en">Current</p>
-    <p>招待状のテイストに合わせて作っていたページ。絞り込みや一覧の動きはこちらが一番進んでいます。</p>
-  </a>
-  <p class="note">
-    このページは検索には出ません。URLを知っている人だけが見られます。<br>
-    5案の中の写真はすべて仮のものです（Wikimedia Commons のフリー素材）。<br>
-    地形データ © OpenStreetMap contributors
-  </p>
+<div class="filters" id="filters">
+  <div class="frow"><span class="lab">カテゴリ</span><div class="chips" id="fCat"></div></div>
+  <div class="frow"><span class="lab">エリア</span><div class="chips" id="fArea"></div></div>
 </div>
+
+<section class="mapsec"><div class="wrap">
+  <div class="hd"><h2>地図</h2><span>THE MAP</span></div>
+  <div class="mapbox"><div class="illmap" id="illmap"></div></div>
+  <p class="maphint">番号をタップすると、その場所の紹介が開きます。2本指でひろげると拡大できます。</p>
+</div></section>
+
+<section class="list"><div class="wrap">
+  <div class="hd"><h2 id="listTitle">ぜんぶ</h2><div class="r"><button id="resetBtn" hidden>絞り込みを外す</button><span id="count"></span></div></div>
+  <div class="grid" id="cards"></div>
+  <p class="empty" id="empty" hidden>この組み合わせの場所はありません。</p>
+</div></section>
+
+<footer>
+  <p class="m">沖縄で会いましょう。</p>
+  <div class="n">HIROAKI &amp; ERIKA</div>
+  <p class="c">地形データ © OpenStreetMap contributors</p>
+</footer>
+
+<div class="sheet-bg" id="sheetBg" hidden></div>
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true"></div>
+
+<script>
+/* =========================================================================
+   スポットのデータ。ここを書き換えるだけで、一覧も地図も更新されます。
+   lat / lng … 地図のピンの位置
+   ※ サンプルの座標はおおよそです。「マップ」ボタンは名前でGoogle検索するので、
+      ナビ自体はピンの精度に関係なく正しい場所に飛びます。
+   ========================================================================= */
+const VENUE = { name:"美々ビーチいとまん", lat:26.13323, lng:127.65050 };
+
+const SPOTS = [
+  { name:"ハイアット リージェンシー 瀬良垣アイランド 沖縄", city:"恩納村", area:"中部", cat:"カフェ", when:["前日","翌日"], by:"both",
+    lat:26.494987, lng:127.873100, gmap:"https://maps.app.goo.gl/GrHUUdSmbpEDLFVs9",
+    comment:"泊まらなくても、ロビーラウンジ＆バーやプールサイドはビジターで使えます。プールサイドでゆっくりドリンクを飲みながら、リゾート気分を味わうのがおすすめ。海も見えます。", tags:["日帰りでもOK","プールサイド","海が見える"], min:70, todo:false },
+  { name:"ぬちまーす工場（ぬちうなー）", city:"うるま市", area:"中部", cat:"体験", when:["翌日"], by:"both",
+    lat:26.372847, lng:127.989555, gmap:"https://maps.app.goo.gl/92H9vyeU41FSLVhb9",
+    comment:"アスリートも使う塩の工場。一般的な食塩と比べて塩分が約25%低く、マグネシウムやカリウムなど21種類の海洋ミネラルがそのまま豊富に含まれています。夏の熱中症対策にも、普段の栄養補給にも。", tags:["工場見学","おみやげ"], min:80, todo:false },
+  { name:"ゆんたくコリビング One Story.s / ワンストーリーズ", city:"本部町", area:"北部", cat:"その他", when:["前日","翌日"], by:"both",
+    lat:26.701063, lng:127.894981, gmap:"https://maps.app.goo.gl/QQ6XtWrVJXiwYqdH7",
+    comment:"今年の2月に、ひと月ほど滞在した場所。毎晩のゆんたくが本当にいい時間で、家族みたいに思える人たちができました。オーナーご夫婦とご家族も、今回ゲストとして来てくれます。", tags:["泊まれる","思い出の場所"], min:120, todo:false },
+  { name:"備瀬のフクギ並木", city:"本部町", area:"北部", cat:"自然", when:["前日","翌日"], by:"both",
+    lat:26.700535, lng:127.880211, gmap:"https://maps.app.goo.gl/UkrVZFpZaudwgdN2A",
+    comment:"並木のなかは、ただ歩くだけで雰囲気がいいです。夕日の時間のチルにもいい場所。蚊が多いので、虫除けだけは必ず持っていってください。", tags:["虫除け必須","夕日"], min:120, todo:false },
+  { name:"ナゴノバ（nagonova）", city:"名護市", area:"北部", cat:"その他", when:["前日","翌日"], by:"both",
+    lat:26.605425, lng:127.971848, gmap:"https://maps.app.goo.gl/8s8DZ7331zFu2Bvm9",
+    comment:"名護にある、公園みたいに誰でも自由に使えるコミュニティスペース。本を読んでも、卓球をしても、ただ座っているだけでもいい場所です。フリーマーケットやミュージックナイト、ワークショップも開かれています。火〜土 10:00〜21:00 ／ 日 10:00〜18:00、月曜休み。", tags:["誰でも入れる","イベントあり","月曜休み"], min:120, todo:false },
+  { name:"果報バンタ", city:"うるま市", area:"中部", cat:"自然", when:["前日","翌日"], by:"both",
+    lat:26.372847, lng:127.989555, gmap:"https://maps.app.goo.gl/RTPuzpCKofyFdG6bA",
+    comment:"下に降りることはできませんが、高台から「これぞ沖縄の海」という絶景が見られます。", tags:["絶景"], min:80, todo:false },
+  { name:"ウクン浜（ウクの浜）", city:"うるま市", area:"中部", cat:"自然", when:["前日","翌日"], by:"h",
+    lat:26.367086, lng:127.989365, gmap:"https://maps.app.goo.gl/AtpGMwTRX8Bkjqfz8", web:"https://www.otv.co.jp/okitive/article/38119/",
+    comment:"宮城島の、崖に囲まれた天然ビーチ。広明が特にお気に入りの場所です。電波もあまり入らないけれど、「何もない」がそこにあります。浜まで車では行けず、途中から土の道を歩きます。監視員もシャワーもトイレもなく、離岸流が起きやすいので、海に入るならライフジャケットを。", tags:["穴場","電波が弱い","歩いて向かう","設備なし"], min:80, todo:false },
+  { name:"LACうるま（HAMACHŪ内）", city:"うるま市", area:"中部", cat:"その他", when:["前日","翌日"], by:"both",
+    lat:26.325302, lng:127.953285, gmap:"https://maps.app.goo.gl/rdDCsZghLQ4vY1kq7",
+    comment:"付き合ってから数ヶ月を過ごした場所です。広明はそれ以前から半年ほど通っていました。当時は LivingAnywhere Commons というサービスがあって、月3万円で全国の拠点に泊まれました（今はもうありません）。もともとは浜比嘉中学校の廃校舎を活かした建物です。ここでの出会いも本当によくて、その人たちも結婚式に来てくれます。", tags:["泊まれる","思い出の場所","元・廃校"], min:70, todo:false },
+  { name:"浜比嘉ビーチ", city:"うるま市", area:"中部", cat:"自然", when:["前日","翌日"], by:"both",
+    lat:26.320984, lng:127.953651, gmap:"https://maps.app.goo.gl/5SJvZKzQuf5pkJ3q7",
+    comment:"LACうるまから車で1〜2分。観光客がほとんど来ない、地元のおじいおばあがゆっくりしに来るような穏やかなビーチです。「何もないのがいい」が味わえるので、沖縄を遊び尽くした人にこそ行ってみてほしい場所。8月に滞在していたときは、ここでウミホタルを見ながら星を眺められました。", tags:["穴場","夜がいい"], min:70, todo:false },
+  { name:"シアタードーナツ・オキナワ", city:"沖縄市", area:"中部", cat:"カフェ", when:["前日","翌日"], by:"both",
+    lat:26.336189, lng:127.800674, gmap:"https://maps.app.goo.gl/pwhHV3fpKpEvXiYJ9",
+    comment:"かなり思い出の場所です。ここでしか上映されていない『人生フルーツ』という映画があると聞いて、まだ付き合う前の広明がひとりで見に行きました。とてもよかったからと、後日わたしを連れて見せに来てくれた場所です。雨の日の予定にもおすすめ。", tags:["雨の日OK","映画が見られる","思い出の場所"], min:55, todo:false },
+  { name:"串源", city:"沖縄市", area:"中部", cat:"ごはん", when:["前日","翌日"], by:"both",
+    lat:26.336409, lng:127.801697, gmap:"https://maps.app.goo.gl/wirxkta58sAfKiEQ7",
+    comment:"沖縄に慣れてきたらぜひ。名物の串盛りは「なんじゃこら」というくらい大きくて、これで一人分？という量が出てきます。", tags:["夜"], min:55, todo:false },
+  { name:"バーガーベアダイナー", city:"宜野湾市", area:"中部", cat:"ごはん", when:["前日","翌日"], by:"both",
+    lat:26.288315, lng:127.768242, gmap:"https://maps.app.goo.gl/kbFAySo4v5fjwhJx6",
+    comment:"アメリカンなバーガー。しっかりおいしいです。", tags:[], min:45, todo:false },
+  { name:"Warren’s Place 2.1 Burgers & Beer", city:"名護市", area:"北部", cat:"ごはん", when:["前日","翌日"], by:"both",
+    lat:26.594906, lng:127.971405, gmap:"https://maps.app.goo.gl/bf9F37xqpHn7o4eW8",
+    comment:"研究を重ねて、ウォーレンさんが個人で始めたお店。おすすめはチーズバーガーで、お肉の味を味わってほしいです。少し個性の強い店主さんなので、駐車場などのルールは守って行ってください。", tags:["ルールは守って"], min:105, todo:false },
+  { name:"さっちゃんそば", city:"名護市", area:"北部", cat:"ごはん", when:["前日","翌日"], by:"both",
+    lat:26.59399, lng:127.974701, gmap:"https://maps.app.goo.gl/9bPwLnQnU1nExrSa8", web:"https://www.sacchan-soba.jp/",
+    comment:"名護でいちばん好きな沖縄そばです。", tags:[], min:110, todo:false },
+  { name:"和タコス", city:"名護市", area:"北部", cat:"ごはん", when:["前日","翌日"], by:"both",
+    lat:26.592113, lng:127.980804, gmap:"https://maps.app.goo.gl/faCeTWKAYgfU2Q2j6",
+    comment:"タコス屋さんのなかでも、かなり上位においしいです。有名店。", tags:[], min:110, todo:false },
+  { name:"ター滝", city:"大宜味村", area:"北部", cat:"体験", when:["前日","翌日"], by:"both",
+    lat:26.639683, lng:128.097565, gmap:"https://maps.app.goo.gl/9LBE4m9jrRWAmm9W6", web:"https://ta-taki-falls.com/about",
+    comment:"滝そのものより、川をたどっていく道中が楽しい場所。飛び込みもできますが、怪我にはくれぐれも気をつけて。深いところがあるので小さいお子さんには向きません。雨の次の日は川が増水しているのでやめておいてください。駐車場は8:00〜17:30（最終入場16:00）、普通車は2時間500円。Googleマップは「ター滝駐車場」で検索を（「ター滝」だと違う場所に案内されます）。", tags:["水に入る","子連れ不向き","雨の翌日はやめる"], min:125, todo:false },
+  { name:"又吉コーヒー園 ヤンバルンチャー 東村店", city:"東村", area:"北部", cat:"体験", when:["前日","翌日"], by:"both",
+    lat:26.603376, lng:128.144623, gmap:"https://maps.app.goo.gl/e8uGzLQK33mxRzQi9",
+    comment:"やんばるの森のなかをジップラインできるアクティビティ。高いところが苦手な広明を、誕生日に連れて行きました。楽しいです。あわせて、沖縄県産のコーヒー豆の見学もできます。", tags:["ジップライン","森あそび","誕生日の場所"], min:125, todo:false },
+  { name:"いしぐふー 小禄具志店", city:"那覇市", area:"那覇", cat:"ごはん", when:["前日","翌日"], by:"e",
+    lat:26.178896, lng:127.656441, gmap:"https://maps.app.goo.gl/HqkgQh9mfUbKzQQU9", web:"https://www.ishigufu.jp/shop/gushi",
+    comment:"もともとは北部のやんばる店に絵梨香がよく通っていて、単発でバイトをさせてもらったり、仲良くしてもらっていました。ご夫婦ともにいい方です。そのやんばる店の店長さんが、いまはこの小禄の店舗にいます（やんばる店は5月から休業して、小禄に集中しています）。", tags:["思い出の場所"], min:20, todo:false },
+  { name:"沖縄かりゆしレンタカー", city:"豊見城市", area:"南部", cat:"その他", when:["前日","翌日"], by:"both",
+    lat:26.163664, lng:127.665009, gmap:"https://maps.app.goo.gl/AiZa8mARAQSXvdMz9", web:"https://www.kariyushi-business.com/",
+    comment:"長期滞在ならここが安いです。とにかく安く借りたい人向けで、保険・補償込み。那覇空港からも近め。1ヶ月プランがあって、1ヶ月未満ならその金額で借りられます。ただし車はけっこう年季が入っています。", tags:["レンタカー","安い","保険込み"], min:20, todo:false },
+  { name:"糸満漁民食堂", city:"糸満市", area:"南部", cat:"ごはん", when:["前日","翌日"], by:"both",
+    lat:26.140322, lng:127.658829, gmap:"https://maps.app.goo.gl/2UViGFrbaMQSzGEa7", web:"https://www.instagram.com/itomangyominshokudo/",
+    comment:"海人（うみんちゅ）の街・糸満で、県産の魚を食べるお店。名物は魚のバター焼きで、バターソースが3種類から選べます。土鍋の魚汁定食も名物です。", tags:["魚がおいしい"], min:15, todo:false },
+  { name:"楚辺そば", city:"那覇市", area:"那覇", cat:"ごはん", when:["前日","翌日"], by:"h",
+    lat:26.203871, lng:127.684761, gmap:"https://maps.app.goo.gl/QPF8MTpWxnYDdBGL6", web:"https://sobesoba.com/",
+    comment:"那覇で広明がいちばん好きな沖縄そば。古民家で雰囲気もいいです。", tags:["古民家"], min:25, todo:false },
+  { name:"そば処 こどら", city:"那覇市", area:"那覇", cat:"ごはん", when:["前日","翌日"], by:"both",
+    lat:26.207067, lng:127.680214, gmap:"https://maps.app.goo.gl/CygKpkaDJ4xruaBDA",
+    comment:"友人に連れてきてもらったお店。器からはみ出る本ソーキそばがおいしいです。", tags:["ソーキそば"], min:25, todo:false },
+  { name:"宮古そばソーキそば専門店 田舎 読谷店", city:"読谷村", area:"中部", cat:"ごはん", when:["前日","翌日"], by:"both",
+    lat:26.404629, lng:127.737427, gmap:"https://maps.app.goo.gl/vwjSkxhnfDwtFwQE7",
+    comment:"かなりディープなそば屋さん。エアコンもない、屋台のようなお店ですが、一度は味わってみてほしいです。", tags:["ディープ"], min:60, todo:false },
+  { name:"バンタカフェ by 星野リゾート", city:"読谷村", area:"中部", cat:"カフェ", when:["前日","翌日"], by:"e",
+    lat:26.417427, lng:127.718498, gmap:"https://maps.app.goo.gl/4ZonCFijAk9ycHjE6",
+    comment:"有名どころ。出会ってすぐの広明を、絵梨香がはじめて連れて行った場所です。混んでいなければ電源もあるので、よくパソコンで作業していました。畳の席もあっていいです。夕方は特に蚊が増えます。", tags:["電源あり","畳の席","夕方は蚊","思い出の場所"], min:65, todo:false },
+  { name:"石窯ピザ酒場 まるき 読谷店", city:"読谷村", area:"中部", cat:"ごはん", when:["前日","翌日"], by:"both",
+    lat:26.423485, lng:127.731331, gmap:"https://maps.app.goo.gl/jcjDwNottR2YSnNf8", web:"https://okibra.com/ja/introduce/maruki/",
+    comment:"ふたりで何度か通ったお店。出会ってすぐの頃、海底ワインが飲めるからと絵梨香がひとりで飲みに行こうとしていたところに広明も誘ってみたら、沖縄市でジムに行きかけていた道中からわざわざバスで来てくれました。絵梨香が飲み潰れた日もありました。", tags:["海底ワイン","思い出の場所"], min:65, todo:false },
+  { name:"陶器工房 壹", city:"読谷村", area:"中部", cat:"買い物", when:["前日","翌日"], by:"e",
+    lat:26.417379, lng:127.738144, gmap:"https://maps.app.goo.gl/7n3VeobBBcVfB7979", web:"https://toukikoubou1.com/",
+    comment:"絵梨香が好きな工房と、その作品です。", tags:["やちむん"], min:65, todo:false },
+  { name:"やちむんの里", city:"読谷村", area:"中部", cat:"体験", when:["前日","翌日"], by:"both",
+    lat:26.408676, lng:127.751259, gmap:"https://maps.app.goo.gl/FJUwfJ64RWMqf8CZ6", web:"https://www.yomitan-kankou.jp/tourist/watch/1611319504/",
+    comment:"雨の日や、やることがない時にぜひ。いろんな工房が集まっています。", tags:["雨の日OK","やちむん"], min:65, todo:false },
+  { name:"おきなわワールド", city:"南城市", area:"南部", cat:"体験", when:["前日","翌日"], by:"both",
+    lat:26.140242, lng:127.748192, gmap:"https://maps.app.goo.gl/k2vaABCZPEsxVjyC8", web:"https://www.gyokusendo.co.jp/okinawaworld/",
+    comment:"ふたりで行きました。子どもも大人も楽しめます。鍾乳洞だけでなく、エイサーやハブとマングース、ハブ酒の製造工場も見られます。", tags:["子連れOK","雨の日OK"], min:25, todo:false },
+  { name:"かぼ天の店なかそね", city:"沖縄市", area:"中部", cat:"ごはん", when:["前日","翌日"], by:"both",
+    lat:26.32616, lng:127.808884, gmap:"https://maps.app.goo.gl/cnxUAdPsHdRvDpj18",
+    comment:"沖縄で一番おいしいサーターアンダギーだと思っています。いろいろ食べ歩きましたが、本島の一番はここです。ちなみに宮古島の一番は「なかゆくい商店」。", tags:["サーターアンダギー"], min:55, todo:false },
+  { name:"アメリカンビレッジ（北谷）", city:"北谷町", area:"中部", cat:"買い物", when:["前日","翌日"], by:"both",
+    lat:26.311689, lng:127.761368, gmap:"https://maps.app.goo.gl/EY7DYoHLJ61PtXLh8", web:"https://www.okinawa-americanvillage.com/",
+    comment:"毎週土曜の20時から、3分間だけ花火が上がります。世界観がとにかくすごい場所。ここで夕陽をたくさん見ました。", tags:["土曜20時に花火","夕日"], min:50, todo:false },
+];
+
+const NAMES = { h:"広明", e:"絵梨香", both:"ふたり" };
+SPOTS.forEach((s,i) => s.no = i + 1);                 /* 地図と一覧で共通の番号 */
+const pad = n => String(n).padStart(2, "0");
+
+/* エリア：南から北の順。まとめボタン（南部・中部・北部）と市町村 */
+const REGION = {
+  "南部":["糸満市","豊見城市","那覇市","南城市"],
+  "中部":["宜野湾市","北谷町","沖縄市","読谷村","うるま市","恩納村"],
+  "北部":["名護市","本部町","大宜味村","東村"],
+};
+const CITIES = [].concat(REGION["南部"], REGION["中部"], REGION["北部"]);
+const CATS = ["ごはん","カフェ","自然","体験","買い物","その他"];
+
+const state = { cat:"", area:"" };
+const mapUrl = s => s.gmap || ("https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(s.q || (s.name + " 沖縄")));
+const inArea = (s, a) => !a || s.city === a || (REGION[a] || []).includes(s.city);
+
+function buildFilters(){
+  const cnt = f => SPOTS.filter(f).length;
+  document.getElementById("fCat").innerHTML =
+    `<button class="chip on" data-v="">すべて</button>` +
+    CATS.filter(c => cnt(s => s.cat === c))
+        .map(c => `<button class="chip" data-v="${c}">${c}<small>${cnt(s => s.cat === c)}</small></button>`).join("");
+  document.getElementById("fArea").innerHTML =
+    `<button class="chip on" data-v="">すべて</button>` +
+    Object.keys(REGION).map(r => `<button class="chip reg" data-v="${r}">${r}</button>`).join("") +
+    `<span class="div"></span>` +
+    CITIES.filter(c => cnt(s => s.city === c))
+          .map(c => `<button class="chip" data-v="${c}">${c}<small>${cnt(s => s.city === c)}</small></button>`).join("");
+}
+
+function render(){
+  const list = SPOTS.filter(s => (!state.cat || s.cat === state.cat) && inArea(s, state.area));
+  const filtered = !!(state.cat || state.area);
+
+  document.getElementById("cards").innerHTML = list.map(s => `
+    <article class="cell" data-name="${esc(s.name)}">
+      <div class="no">${pad(s.no)}</div>
+      <h3>${s.name}</h3>
+      <div class="m">${s.city} ／ ${s.cat}</div>
+      <p>${s.comment || ""}</p>
+    </article>`).join("");
+
+  document.getElementById("empty").hidden = list.length > 0;
+  document.getElementById("count").textContent = filtered ? `${list.length} / ${SPOTS.length}` : `${SPOTS.length} PLACES`;
+  document.getElementById("resetBtn").hidden = !filtered;
+  document.getElementById("listTitle").textContent =
+    filtered ? [state.area, state.cat].filter(Boolean).join("・") : "ぜんぶ";
+
+  syncMap(list);
+}
+
+/* =========================================================================
+   イラストの地図
+   沖縄本島の海岸線を緯度経度の点で持ち、SVGで描いています。
+   ピンも同じ緯度経度から位置を出すので、島とピンは必ず一致します。
+   ========================================================================= */
+const MAPW = 724, MAPH = 900;
+const BB = { w:127.58, e:128.38, s:26.03, n:26.92 };   /* 島のまわりに余白をとる */
+const px  = lng => (lng - BB.w) / (BB.e - BB.w) * MAPW;
+const py  = lat => (BB.n - lat) / (BB.n - BB.s) * MAPH;
+
+/* 沖縄本島の海岸線
+   OpenStreetMap の実測データ（29,144点）を、等間隔にならしてから448点に間引いたもの。
+   小さな入り江や岬まで残るので、実物に近い輪郭になります。 */
+const COAST = [
+  [127.6302,26.1881],[127.6315,26.1783],[127.6345,26.1765],[127.636,26.1811],[127.6353,26.1984],[127.6391,26.2013],
+  [127.638,26.1966],[127.6439,26.1857],[127.644,26.1799],[127.6411,26.1753],[127.6552,26.1735],[127.6488,26.1723],
+  [127.6527,26.167],[127.6502,26.1646],[127.6534,26.1642],[127.6469,26.1594],[127.6473,26.1548],[127.6486,26.1541],
+  [127.6508,26.1606],[127.6565,26.1617],[127.6631,26.1598],[127.6678,26.1543],[127.666,26.1511],[127.6495,26.145],
+  [127.6495,26.1332],[127.652,26.1266],[127.6554,26.1284],[127.654,26.1329],[127.6555,26.1355],[127.6602,26.1355],
+  [127.659,26.1318],[127.668,26.1332],[127.668,26.1307],[127.6654,26.1315],[127.6634,26.1291],[127.664,26.1263],
+  [127.6674,26.1252],[127.6634,26.1213],[127.6681,26.121],[127.6629,26.12],[127.6614,26.1177],[127.6635,26.1126],
+  [127.6593,26.103],[127.6575,26.0849],[127.6594,26.0816],[127.6776,26.075],[127.6994,26.0874],[127.7069,26.0895],
+  [127.7146,26.0876],[127.7245,26.0908],[127.7285,26.0968],[127.734,26.0997],[127.7477,26.1182],[127.7612,26.1235],
+  [127.767,26.1271],[127.7697,26.1319],[127.7749,26.1344],[127.7876,26.133],[127.7917,26.1347],[127.8042,26.1474],
+  [127.8069,26.1485],[127.8082,26.1469],[127.81,26.1534],[127.8197,26.1588],[127.8254,26.1652],[127.8296,26.1662],
+  [127.8304,26.1773],[127.8225,26.1813],[127.8207,26.1906],[127.8173,26.1914],[127.7968,26.1862],[127.7914,26.1798],
+  [127.7888,26.1732],[127.7909,26.1746],[127.79,26.172],[127.7806,26.1725],[127.7771,26.1803],[127.7794,26.1822],
+  [127.7767,26.1886],[127.7709,26.1937],[127.7676,26.2005],[127.7567,26.2047],[127.7608,26.2097],[127.7786,26.2175],
+  [127.7773,26.2199],[127.7849,26.2254],[127.7926,26.2205],[127.7885,26.2267],[127.7899,26.2478],[127.7947,26.254],
+  [127.7992,26.267],[127.8084,26.2738],[127.8127,26.2728],[127.8157,26.2787],[127.8164,26.2878],[127.8109,26.2952],
+  [127.8126,26.3002],[127.8175,26.3045],[127.827,26.3038],[127.8299,26.3123],[127.8439,26.3144],[127.8421,26.3156],
+  [127.8466,26.3145],[127.8459,26.319],[127.8359,26.3231],[127.838,26.3246],[127.8362,26.3287],[127.8428,26.3348],
+  [127.8601,26.3439],[127.865,26.3428],[127.8714,26.3295],[127.8759,26.3277],[127.8922,26.3103],[127.9045,26.3008],
+  [127.9069,26.3017],[127.9147,26.2959],[127.9204,26.2955],[127.9231,26.3074],[127.918,26.3182],[127.9075,26.3298],
+  [127.9132,26.3317],[127.8981,26.3336],[127.8862,26.3435],[127.8753,26.3569],[127.8732,26.3627],[127.8749,26.375],
+  [127.8801,26.3773],[127.8721,26.3873],[127.865,26.3911],[127.8585,26.3979],[127.8469,26.4036],[127.8463,26.405],
+  [127.8491,26.4065],[127.8404,26.4074],[127.8375,26.4127],[127.8383,26.4171],[127.8277,26.4218],[127.8322,26.4286],
+  [127.8315,26.4308],[127.8427,26.4287],[127.8447,26.4389],[127.8514,26.4491],[127.8693,26.4571],[127.8767,26.4547],
+  [127.8875,26.4561],[127.8984,26.45],[127.9082,26.4487],[127.9152,26.4451],[127.9166,26.4462],[127.9215,26.4404],
+  [127.9399,26.4415],[127.949,26.4389],[127.9441,26.4439],[127.9434,26.4491],[127.9448,26.4533],[127.9509,26.457],
+  [127.9472,26.4636],[127.9502,26.4664],[127.9519,26.4723],[127.9583,26.4734],[127.9657,26.4687],[127.9704,26.4689],
+  [127.9893,26.4748],[127.992,26.4779],[127.9909,26.4804],[127.9967,26.481],[128.001,26.4839],[128.0011,26.4919],
+  [127.9931,26.5025],[127.993,26.5056],[127.9957,26.5083],[127.9989,26.5096],[128.0042,26.506],[128.0062,26.5119],
+  [128.0093,26.5139],[128.0274,26.5114],[128.0317,26.5134],[128.0331,26.5192],[128.0383,26.5199],[128.0447,26.5168],
+  [128.0544,26.5208],[128.0478,26.5277],[128.0446,26.536],[128.0343,26.551],[128.0341,26.5526],[128.0404,26.5539],
+  [128.0423,26.5585],[128.0437,26.5488],[128.0515,26.5481],[128.0651,26.5515],[128.0939,26.535],[128.0937,26.5401],
+  [128.1005,26.5398],[128.1021,26.5449],[128.1094,26.5501],[128.1238,26.5544],[128.1385,26.5546],[128.1391,26.5666],
+  [128.1498,26.5686],[128.1435,26.5738],[128.1362,26.5872],[128.1292,26.5924],[128.1246,26.6017],[128.1508,26.5987],
+  [128.1549,26.6078],[128.1465,26.6215],[128.1483,26.6285],[128.1595,26.6301],[128.1837,26.6242],[128.2098,26.6263],
+  [128.2377,26.6321],[128.2515,26.6452],[128.2519,26.6519],[128.2565,26.6577],[128.2626,26.6594],[128.2664,26.6681],
+  [128.2739,26.6713],[128.2785,26.676],[128.2799,26.6893],[128.2831,26.6969],[128.2917,26.7006],[128.2915,26.7078],
+  [128.2983,26.7112],[128.2986,26.7139],[128.295,26.7184],[128.3032,26.7219],[128.3075,26.7303],[128.3173,26.7348],
+  [128.3233,26.742],[128.3195,26.7408],[128.3205,26.746],[128.3268,26.7513],[128.3269,26.7552],[128.3206,26.7571],
+  [128.3248,26.766],[128.323,26.7716],[128.3261,26.7798],[128.3235,26.7865],[128.3179,26.792],[128.321,26.7969],
+  [128.3182,26.8055],[128.3203,26.8132],[128.3152,26.8211],[128.3056,26.8295],[128.3052,26.8445],[128.2949,26.8457],
+  [128.2946,26.8427],[128.2906,26.8427],[128.2901,26.8459],[128.2822,26.8503],[128.2798,26.8555],[128.271,26.859],
+  [128.2634,26.8655],[128.2623,26.8689],[128.2645,26.8724],[128.2627,26.874],[128.257,26.8749],[128.2486,26.8696],
+  [128.2446,26.8592],[128.253,26.85],[128.2533,26.8432],[128.2348,26.8127],[128.231,26.8038],[128.2314,26.7986],
+  [128.2265,26.7966],[128.2234,26.7897],[128.2055,26.7746],[128.2038,26.7678],[128.1974,26.7667],[128.1911,26.7617],
+  [128.184,26.7502],[128.1762,26.749],[128.1632,26.7433],[128.1522,26.7441],[128.1517,26.7415],[128.1567,26.7385],
+  [128.1604,26.7295],[128.1597,26.7238],[128.1565,26.7196],[128.1401,26.7073],[128.1176,26.7027],[128.0996,26.6814],
+  [128.0994,26.6779],[128.1061,26.6704],[128.1112,26.6716],[128.1201,26.668],[128.1241,26.6603],[128.119,26.6594],
+  [128.1151,26.6618],[128.112,26.6604],[128.1131,26.6647],[128.1112,26.6668],[128.1078,26.6635],[128.0963,26.6607],
+  [128.081,26.6457],[128.0695,26.6433],[128.0529,26.6354],[128.0362,26.6361],[128.0243,26.6279],[128.0137,26.6315],
+  [128.0072,26.6309],[128.0039,26.633],[127.9997,26.6423],[127.9841,26.6486],[127.9841,26.651],[127.9898,26.6526],
+  [127.9937,26.6721],[127.997,26.6767],[128.0076,26.6839],[128.0065,26.6868],[127.9984,26.692],[127.9867,26.6931],
+  [127.9773,26.6973],[127.9692,26.6951],[127.967,26.6976],[127.9687,26.7026],[127.9561,26.7076],[127.9509,26.7082],
+  [127.9333,26.7032],[127.9138,26.7027],[127.905,26.6995],[127.9003,26.7029],[127.8959,26.7022],[127.8807,26.7088],
+  [127.8741,26.6863],[127.8873,26.6745],[127.8897,26.6685],[127.8896,26.6612],[127.8932,26.6602],[127.8865,26.6594],
+  [127.8807,26.6555],[127.8784,26.6404],[127.8854,26.6327],[127.8874,26.6253],[127.8939,26.6149],[127.8951,26.6075],
+  [127.9124,26.6015],[127.9205,26.6085],[127.9262,26.6087],[127.9374,26.6029],[127.9464,26.6014],[127.9637,26.5915],
+  [127.9777,26.5889],[127.983,26.583],[127.9832,26.5758],[127.9793,26.565],[127.9674,26.5504],[127.9631,26.5418],
+  [127.9559,26.5459],[127.9419,26.536],[127.9332,26.5427],[127.9327,26.5363],[127.927,26.5287],[127.922,26.5279],
+  [127.9172,26.5169],[127.9074,26.5187],[127.8997,26.5138],[127.8925,26.512],[127.8901,26.5059],[127.8853,26.5031],
+  [127.8682,26.5126],[127.8625,26.5055],[127.8574,26.5088],[127.8588,26.5049],[127.856,26.5002],[127.8507,26.5044],
+  [127.845,26.5039],[127.84,26.4957],[127.8451,26.4865],[127.8449,26.4814],[127.841,26.4786],[127.8351,26.4778],
+  [127.8271,26.4686],[127.8113,26.4624],[127.809,26.4566],[127.8022,26.4522],[127.8006,26.4489],[127.8023,26.4464],
+  [127.8,26.4462],[127.803,26.4434],[127.7987,26.4374],[127.7836,26.4355],[127.771,26.4451],[127.7595,26.4339],
+  [127.7428,26.423],[127.7392,26.4225],[127.7347,26.4241],[127.7247,26.4395],[127.7125,26.4404],[127.7162,26.4337],
+  [127.7144,26.4095],[127.7229,26.388],[127.7288,26.3825],[127.7383,26.3637],[127.745,26.3625],[127.756,26.3686],
+  [127.74,26.359],[127.7414,26.3526],[127.7444,26.3512],[127.7465,26.3411],[127.7431,26.3319],[127.7454,26.3254],
+  [127.7484,26.3214],[127.7554,26.3229],[127.7534,26.3167],[127.7594,26.3083],[127.7575,26.2971],[127.7507,26.2909],
+  [127.7438,26.2879],[127.7396,26.2839],[127.7404,26.2817],[127.7317,26.2828],[127.7267,26.279],[127.7306,26.2785],
+  [127.7269,26.277],[127.7268,26.2688],[127.7172,26.2745],[127.7074,26.2727],[127.6919,26.2569],[127.674,26.2557],
+  [127.6828,26.2548],[127.6841,26.2439],[127.6755,26.2465],[127.6755,26.2506],[127.6711,26.2508],[127.6673,26.2436],
+  [127.6714,26.2398],[127.6674,26.234],[127.6718,26.2325],[127.676,26.2392],[127.6787,26.2389],[127.6801,26.2328],
+  [127.6788,26.2287],[127.6835,26.2251],[127.6744,26.2252],[127.671,26.2219],[127.661,26.2191],[127.6624,26.2196],
+  [127.6619,26.2172],[127.6664,26.2123],[127.6734,26.2084],[127.6713,26.2064],[127.6623,26.2128],[127.65,26.2168],
+  [127.6424,26.2091],[127.641,26.2046],[127.6311,26.205],[127.6302,26.1884]
+];
+
+/* 周りの島も同じく実測データ（瀬長島だけ小さすぎてデータが無いので手で置いています） */
+const ISLES = [
+  /* 伊江島 */ [[127.749,26.7222],[127.75,26.7171],[127.7532,26.7122],[127.7556,26.71],[127.7608,26.7085],[127.7626,26.7071],[127.762,26.7083],[127.7632,26.7077],[127.7643,26.7085],[127.7764,26.7085],[127.7814,26.7095],[127.7874,26.7099],[127.7944,26.7087],[127.7962,26.7091],[127.7977,26.7068],[127.7975,26.7078],[127.7995,26.7079],[127.8003,26.7064],[127.8011,26.707],[127.803,26.7069],[127.8037,26.7055],[127.8046,26.7049],[127.8052,26.7049],[127.8055,26.7061],[127.8072,26.7056],[127.8092,26.7059],[127.8096,26.7054],[127.8103,26.7058],[127.8107,26.7054],[127.8113,26.7068],[127.8278,26.7099],[127.8303,26.7138],[127.8313,26.7169],[127.8311,26.7205],[127.8284,26.7247],[127.8258,26.7267],[127.8214,26.7285],[127.8185,26.7328],[127.8112,26.7378],[127.808,26.739],[127.7984,26.7367],[127.7944,26.7345],[127.7892,26.7334],[127.7863,26.7339],[127.7829,26.7334],[127.7786,26.7349],[127.7763,26.7342],[127.7689,26.737],[127.7594,26.7375],[127.7547,26.7352],[127.7527,26.7332],[127.752,26.7288],[127.7491,26.7226]],
+  /* 瀬底島 */ [[127.8546,26.6484],[127.8558,26.6453],[127.8557,26.6439],[127.8565,26.6435],[127.8572,26.6413],[127.8595,26.6381],[127.8594,26.6356],[127.8581,26.6316],[127.86,26.6291],[127.8623,26.6295],[127.8648,26.6358],[127.8706,26.6406],[127.873,26.6471],[127.8744,26.6489],[127.8729,26.6499],[127.871,26.6524],[127.8667,26.6538],[127.8626,26.6533],[127.8579,26.6514],[127.8546,26.6485]],
+  /* 古宇利島 */ [[128.0083,26.7074],[128.009,26.7042],[128.0107,26.7005],[128.0134,26.6982],[128.0155,26.6943],[128.0153,26.6963],[128.0162,26.6958],[128.0182,26.6962],[128.0184,26.695],[128.0187,26.6955],[128.02,26.6955],[128.0203,26.6948],[128.0191,26.6943],[128.02,26.6941],[128.0236,26.6953],[128.026,26.6993],[128.0274,26.7002],[128.0268,26.7085],[128.028,26.7091],[128.0277,26.7103],[128.0269,26.7102],[128.0271,26.711],[128.0265,26.7113],[128.0198,26.7134],[128.0194,26.7142],[128.0188,26.7138],[128.0165,26.7144],[128.0144,26.7137],[128.0125,26.7141],[128.0126,26.7134],[128.01,26.7117],[128.0083,26.7076]],
+  /* 屋我地島 */ [[127.9938,26.6603],[127.9959,26.6588],[127.9974,26.6563],[127.9992,26.6569],[128.0001,26.6559],[128.0023,26.6567],[128.0031,26.6566],[128.0047,26.6528],[128.0099,26.6506],[128.0097,26.6539],[128.0104,26.6551],[128.0126,26.657],[128.0146,26.6574],[128.0161,26.6571],[128.0212,26.6532],[128.023,26.6531],[128.0249,26.6519],[128.0312,26.6495],[128.0328,26.647],[128.0326,26.6457],[128.031,26.6448],[128.0307,26.6439],[128.0333,26.6455],[128.0342,26.6471],[128.0337,26.6496],[128.0353,26.6506],[128.0344,26.6536],[128.0347,26.6544],[128.0337,26.6554],[128.0341,26.6563],[128.0333,26.6563],[128.0328,26.657],[128.0334,26.6576],[128.0335,26.6592],[128.0317,26.6591],[128.0279,26.6615],[128.0226,26.6692],[128.0211,26.6728],[128.021,26.6747],[128.0218,26.6753],[128.021,26.676],[128.0209,26.6798],[128.0203,26.6804],[128.0196,26.6791],[128.0171,26.6783],[128.0099,26.679],[128.0085,26.6767],[128.0086,26.675],[128.0065,26.6756],[128.0061,26.6743],[128.004,26.6742],[128.0032,26.6762],[128.0011,26.6748],[127.9991,26.6751],[127.9994,26.6732],[127.9986,26.6712],[127.9978,26.6709],[127.996,26.6713],[127.995,26.6709],[127.996,26.6681],[127.9946,26.666],[127.9953,26.6644],[127.9938,26.6604]],
+  /* 平安座島 */ [[127.94,26.3362],[127.9462,26.3395],[127.9533,26.34],[127.9544,26.3394],[127.9553,26.337],[127.957,26.3361],[127.9559,26.3369],[127.9561,26.3385],[127.9569,26.339],[127.9586,26.3384],[127.9591,26.3376],[127.9585,26.3357],[127.959,26.336],[127.9609,26.339],[127.9637,26.3408],[127.9741,26.3503],[127.9743,26.3537],[127.9697,26.3556],[127.969,26.362],[127.9676,26.3626],[127.9552,26.3563],[127.9514,26.3575],[127.9455,26.3564],[127.9444,26.3573],[127.9438,26.3604],[127.9441,26.3617],[127.9435,26.3618],[127.9431,26.3631],[127.9442,26.3568],[127.9433,26.3543],[127.9459,26.3509],[127.948,26.3458],[127.9462,26.3412],[127.9401,26.3364]],
+  /* 宮城島 */ [[127.9691,26.3633],[127.9701,26.3578],[127.9698,26.3561],[127.971,26.3553],[127.9749,26.3545],[127.9769,26.3531],[127.9758,26.3524],[127.9771,26.3522],[127.9777,26.3525],[127.9778,26.3539],[127.9763,26.3548],[127.9809,26.3554],[127.9831,26.3579],[127.9875,26.3596],[127.9917,26.3591],[127.9928,26.3599],[127.9936,26.3614],[127.9962,26.3618],[127.9944,26.3634],[127.9949,26.3651],[127.9936,26.3668],[127.9946,26.3678],[127.9965,26.3669],[127.9968,26.3673],[127.9937,26.3704],[127.9928,26.3743],[127.9892,26.375],[127.9889,26.3745],[127.986,26.3745],[127.9863,26.3755],[127.9855,26.376],[127.9856,26.3768],[127.9869,26.377],[127.9905,26.3794],[127.9901,26.3809],[127.9889,26.3823],[127.9882,26.3848],[127.9845,26.3821],[127.9835,26.3798],[127.9813,26.379],[127.9781,26.3793],[127.9733,26.376],[127.9721,26.3712],[127.9692,26.3682],[127.9691,26.3634]],
+  /* 伊計島 */ [[127.9886,26.3867],[127.9892,26.3855],[127.9902,26.385],[127.9914,26.387],[127.9923,26.3868],[127.9917,26.3852],[127.9927,26.3835],[127.9916,26.383],[127.9947,26.3837],[127.9983,26.3822],[127.9981,26.3832],[127.9989,26.3842],[127.9989,26.3867],[128.0016,26.3918],[128.0041,26.3995],[128.0028,26.3994],[128.0,26.4008],[127.9995,26.3999],[127.9955,26.3998],[127.9955,26.3981],[127.9938,26.3956],[127.9887,26.3929],[127.9893,26.3911],[127.9914,26.3888],[127.9907,26.388],[127.9895,26.3879],[127.9886,26.3868]],
+  /* 津堅島 */ [[127.9323,26.2445],[127.9338,26.2432],[127.9366,26.2438],[127.9382,26.2427],[127.9393,26.2428],[127.9403,26.2417],[127.9429,26.2417],[127.9422,26.2433],[127.943,26.2446],[127.9424,26.2457],[127.943,26.2466],[127.9446,26.2468],[127.9466,26.2483],[127.9463,26.2543],[127.947,26.2567],[127.9477,26.2573],[127.9481,26.257],[127.9483,26.2577],[127.9469,26.2598],[127.9439,26.2622],[127.9374,26.2622],[127.9388,26.2576],[127.9384,26.2529],[127.9367,26.2505],[127.9354,26.2501],[127.9342,26.2489],[127.9336,26.2474],[127.9341,26.2461],[127.9336,26.2448],[127.9347,26.2463],[127.9357,26.2455],[127.9354,26.2446],[127.9369,26.2451],[127.9381,26.2437],[127.9376,26.2435],[127.9368,26.2443],[127.934,26.2434],[127.9323,26.2446]],
+  /* 久高島 */ [[127.8832,26.1562],[127.884,26.1548],[127.8857,26.155],[127.8858,26.1538],[127.8884,26.1542],[127.8936,26.1589],[127.8994,26.1619],[127.9012,26.1637],[127.9072,26.1677],[127.9095,26.1696],[127.9105,26.1716],[127.9082,26.1718],[127.9048,26.1683],[127.9009,26.1682],[127.8982,26.1674],[127.8979,26.1663],[127.8963,26.1648],[127.8918,26.1638],[127.8865,26.1606],[127.8842,26.1602],[127.8861,26.1598],[127.8857,26.1592],[127.885,26.1593],[127.8847,26.1576],[127.8832,26.1563]],
+  /* 瀬長島 */ [[127.6415,26.1785],[127.6462,26.1779],[127.6484,26.1742],[127.6471,26.1707],[127.6428,26.1702],[127.6408,26.1741]],
+];
+
+/* 地名 */
+const PLACES = [
+  { lng:128.252, lat:26.884, t:"辺戸岬",  a:"end" },
+  { lng:128.226, lat:26.752, t:"国頭",   a:"middle" },
+  { lng:127.868, lat:26.672, t:"本部",   a:"end" },
+  { lng:127.795, lat:26.742, t:"伊江島", a:"middle" },
+  { lng:127.985, lat:26.596, t:"名護"           },
+  { lng:127.836, lat:26.494, t:"恩納",   a:"end" },
+  { lng:127.716, lat:26.396, t:"読谷",   a:"end" },
+  { lng:127.830, lat:26.372, t:"うるま", a:"end" },
+  { lng:127.742, lat:26.296, t:"宜野湾", a:"end" },
+  { lng:127.686, lat:26.234, t:"那覇",   a:"end" },
+  { lng:127.796, lat:26.196, t:"南城"           },
+  { lng:127.716, lat:26.096, t:"糸満",   a:"end" },
+];
+
+/* 名所のイラスト。実際の場所（緯度経度）に置いています */
+const SHOW_DECOR = false;   /* 名所のイラストを出すかどうか。true にすれば復活します */
+const DECOR = [
+  { t:"whale",   lng:127.792, lat:26.652, size:66, r:0,   n:"美ら海水族館（ジンベエザメ）" },
+  { t:"bridge",  lng:128.008, lat:26.678, size:52, r:0,   n:"古宇利大橋" },
+  { t:"banyan",  lng:127.995, lat:26.596, size:46, r:0,   n:"ひんぷんガジュマル（名護）" },
+  { t:"cliff",   lng:127.838, lat:26.512, size:48, r:0,   n:"万座毛" },
+  { t:"light",   lng:127.686, lat:26.448, size:46, r:0,   n:"残波岬灯台" },
+  { t:"pot",     lng:127.786, lat:26.404, size:42, r:0,   n:"やちむんの里" },
+  { t:"searoad", lng:127.930, lat:26.352, size:54, r:0,   n:"海中道路" },
+  { t:"castle",  lng:127.884, lat:26.318, size:48, r:0,   n:"勝連城跡" },
+  { t:"wheel",   lng:127.728, lat:26.318, size:46, r:0,   n:"アメリカンビレッジ（北谷）" },
+  { t:"gate",    lng:127.744, lat:26.230, size:46, r:0,   n:"首里城・守礼門" },
+  { t:"rock",    lng:127.858, lat:26.172, size:44, r:0,   n:"斎場御嶽" },
+  { t:"plane",   lng:127.606, lat:26.192, size:44, r:-24, n:"那覇空港の真上（瀬長島）" },
+  /* 海のあいているところに */
+  { t:"turtle2",  lng:128.150, lat:26.108, size:58, r:14  },
+  { t:"fish2",    lng:127.616, lat:26.560, size:44, r:-8  },
+  { t:"fish2",    lng:128.300, lat:26.418, size:40, r:10  },
+  { t:"hibiscus", lng:127.636, lat:26.790, size:46, r:-10 },
+  { t:"hibiscus", lng:128.318, lat:26.696, size:42, r:16  },
+];
+
+/* 拡大したときだけ出る市町村名 */
+const PLACES2 = [
+  { lng:127.974, lat:26.691, t:"今帰仁", a:"end"  },
+  { lng:128.118, lat:26.690, t:"大宜味"          },
+  { lng:128.150, lat:26.613, t:"東村"            },
+  { lng:127.981, lat:26.489, t:"宜野座"          },
+  { lng:127.926, lat:26.456, t:"金武"            },
+  { lng:127.806, lat:26.334, t:"沖縄市", a:"end" },
+  { lng:127.755, lat:26.362, t:"嘉手納", a:"end" },
+  { lng:127.759, lat:26.320, t:"北谷",   a:"end" },
+  { lng:127.786, lat:26.284, t:"中城"            },
+  { lng:127.722, lat:26.246, t:"浦添",   a:"end" },
+  { lng:127.758, lat:26.226, t:"西原"            },
+  { lng:127.754, lat:26.200, t:"与那原"          },
+  { lng:127.727, lat:26.194, t:"南風原", a:"end" },
+  { lng:127.686, lat:26.177, t:"豊見城", a:"end" },
+  { lng:127.743, lat:26.144, t:"八重瀬"          },
+];
+
+/* 点の列を、なめらかな曲線（Catmull-Rom）でつないだパスにする。
+   点は実測の海岸線なので、なめらかにしても形は崩れません。 */
+function coastPath(pts){
+  const p = pts.map(([lng,lat]) => [px(lng), py(lat)]);
+  const n = p.length;
+  if(n < 3) return pts.map(([lng,lat],i) =>
+    `${i ? "L" : "M"}${px(lng).toFixed(1)},${py(lat).toFixed(1)}`).join(" ") + "Z";
+
+  const T = 0.05;                              /* 曲がり具合。大きいほど丸くなる */
+  const at = i => p[((i % n) + n) % n];
+  const f = v => v.toFixed(1);
+
+  let d = `M${f(p[0][0])},${f(p[0][1])}`;
+  for(let i = 0; i < n; i++){
+    const p0 = at(i-1), p1 = at(i), p2 = at(i+1), p3 = at(i+2);
+    const c1 = [p1[0] + (p2[0]-p0[0]) * T, p1[1] + (p2[1]-p0[1]) * T];
+    const c2 = [p2[0] - (p3[0]-p1[0]) * T, p2[1] - (p3[1]-p1[1]) * T];
+    d += ` C${f(c1[0])},${f(c1[1])} ${f(c2[0])},${f(c2[1])} ${f(p2[0])},${f(p2[1])}`;
+  }
+  return d + "Z";
+}
+
+
+
+function buildMap(){
+  const box = document.getElementById("illmap");
+  if(!box) return;
+
+  const isle = ISLES.map(pts => `<path d="${coastPath(pts)}"/>`).join("");
+
+
+  const decor = !SHOW_DECOR ? "" : DECOR.map(d => {
+    const x = px(d.lng), y = py(d.lat), h = d.size;
+    return `<g transform="translate(${(x-h/2).toFixed(1)},${(y-h/2).toFixed(1)}) rotate(${d.r||0} ${h/2} ${h/2})">
+      <use href="#d-${d.t}" width="${h}" height="${h}"/></g>`;
+  }).join("");
+
+  const names = PLACES.concat(PLACES2.map(p => ({...p, lv2:true}))).map(p =>
+    `<text x="${px(p.lng).toFixed(1)}" y="${py(p.lat).toFixed(1)}" text-anchor="${p.a || "start"}"
+       class="${p.lv2 ? "lv2" : ""}"
+       dx="${p.a === "end" ? -9 : p.a === "middle" ? 0 : 9}" dy="4">${p.t}</text>`).join("");
+
+  /* 海のさざ波 */
+  const waves = [
+    [70,150],[120,255],[52,392],[96,520],[150,660],[74,742],[560,690],[612,790],[520,832],
+    [430,120],[500,205],[600,300],[640,430],[300,60],[210,84]
+  ].map(([x,y]) =>
+    `<path d="M${x},${y} c 7,-5 14,5 21,0 c 7,-5 14,5 21,0"/>`).join("");
+
+  box.innerHTML = `
+    <svg viewBox="0 0 ${MAPW} ${MAPH}" preserveAspectRatio="xMidYMid meet" aria-label="沖縄本島のイラスト地図">
+      <g class="waves" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" opacity=".65">${waves}</g>
+
+      <!-- 島の下にずらした厚み（参考画像の立体的な見え方） -->
+      <g class="landshadow" id="landShadow" transform="translate(13,16)">
+        <path d="${coastPath(COAST)}"/>
+        ${isle}
+      </g>
+
+      <g class="land">
+        <path d="${coastPath(COAST)}"/>
+        ${isle}
+      </g>
+
+      <g class="placenames">${names}</g>
+
+      <!-- 空港 -->
+      <g class="airport" id="airportMark" data-x="${px(127.646).toFixed(1)}" data-y="${py(26.196).toFixed(1)}" transform="translate(${px(127.646).toFixed(1)},${py(26.196).toFixed(1)})">
+        <circle r="10"/>
+        <path d="M-5.4,0.6 L5.4,-1.4 M-1.8,-3.4 L1.6,0 M-1.8,4.4 L1.4,1.4 M3.6,-1 L5.6,-2.4"
+              fill="none" stroke-width="1.7" stroke-linecap="round"/>
+        <text x="0" y="-16" text-anchor="middle">那覇空港</text>
+      </g>
+
+      <!-- 手書き風のイラスト -->
+      <g class="deco">${decor}</g>
+    </svg>
+
+    <svg class="leads" aria-hidden="true"></svg>
+    <div class="pin venue">会場</div>
+
+
+
+    <div class="mapctl">
+      <button data-z="in"    aria-label="拡大">＋</button>
+      <button data-z="out"   aria-label="縮小">−</button>
+      <button data-z="reset" class="reset" aria-label="全体表示">全体</button>
+    </div>
+    <div class="zoomhint"></div>
+    <svg class="compass" viewBox="0 0 56 56" aria-hidden="true">
+      <circle cx="28" cy="28" r="24" fill="none" stroke-width="1.6"/>
+      <path d="M28,12 L33.5,32 L28,28.5 L22.5,32 Z"/>
+      <text x="28" y="8" text-anchor="middle">N</text>
+    </svg>
+  `;
+
+  setupZoom(box);
+  render();
+}
+
+/* ============ 拡大・縮小・移動 ============ */
+const view = { k:1, tx:0, ty:0 };
+let W0 = 0, H0 = 0;          /* 地図の表示サイズ（等倍のとき） */
+let CURRENT = [];            /* いま表示しているスポット */
+let ACTIVE = null;           /* ふきだしを開いているスポット */
+
+const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+
+function measure(){
+  const box = document.getElementById("illmap");
+  W0 = box.clientWidth; H0 = box.clientHeight;
+}
+
+function clampView(){
+  view.k = clamp(view.k, 1, 4);
+  view.tx = clamp(view.tx, W0 - W0 * view.k, 0);
+  view.ty = clamp(view.ty, H0 - H0 * view.k, 0);
+}
+
+function applyView(){
+  const box = document.getElementById("illmap");
+  if(!box) return;
+  clampView();
+  const svg = box.querySelector("svg:not(.compass):not(.leads)");
+  if(svg){
+    svg.style.transform = `translate(${view.tx}px,${view.ty}px) scale(${view.k})`;
+    svg.style.setProperty("--k", view.k);
+    /* 拡大するほど線を細く（2.2px → 1.1px） */
+    svg.style.setProperty("--sw", (2.2 / Math.min(2, 0.6 + 0.4 * view.k)).toFixed(2) + "px");
+    /* 島の厚みも倍率で割って、見た目の厚みを一定に保つ */
+    const sh = svg.querySelector("#landShadow");
+    if(sh) sh.setAttribute("transform",
+      `translate(${(13/view.k).toFixed(2)},${(16/view.k).toFixed(2)})`);
+    const ap = svg.querySelector("#airportMark");
+    if(ap) ap.setAttribute("transform",
+      `translate(${ap.dataset.x},${ap.dataset.y}) scale(${(1/view.k).toFixed(4)})`);
+  }
+  box.classList.toggle("zoomed", view.k > 1.02);
+  box.classList.toggle("detail", view.k >= 1.4);   /* 少し拡大したらスポット名と市町村名を出す */
+  const hint = box.querySelector(".zoomhint");
+  if(hint) hint.textContent = view.k > 1.02 ? "×" + view.k.toFixed(1) : "";
+  placePins();
+}
+
+/* ある一点を中心に拡大する */
+function zoomAt(k2, cx, cy){
+  k2 = clamp(k2, 1, 4);
+  const r = k2 / view.k;
+  view.tx = cx - (cx - view.tx) * r;
+  view.ty = cy - (cy - view.ty) * r;
+  view.k = k2;
+  applyView();
+}
+
+function setupZoom(box){
+  let pts = new Map(), lastD = 0, lastMid = null, moved = 0;
+
+  box.addEventListener("pointerdown", e => {
+    if(e.target.closest(".tip") || e.target.closest(".mapctl")) return;
+    box.setPointerCapture(e.pointerId);
+    pts.set(e.pointerId, [e.clientX, e.clientY]);
+    moved = 0; lastD = 0; lastMid = null;
+    box.classList.add("dragging");
+  });
+
+  box.addEventListener("pointermove", e => {
+    if(!pts.has(e.pointerId)) return;
+    const prev = pts.get(e.pointerId);
+    pts.set(e.pointerId, [e.clientX, e.clientY]);
+    const r = box.getBoundingClientRect();
+
+    if(pts.size === 1){
+      if(view.k <= 1.02) return;                 /* 等倍のときは動かさない */
+      const dx = e.clientX - prev[0], dy = e.clientY - prev[1];
+      moved += Math.hypot(dx, dy);
+      view.tx += dx; view.ty += dy;
+      applyView();
+    } else if(pts.size === 2){
+      const [a,b] = [...pts.values()];
+      const d = Math.hypot(a[0]-b[0], a[1]-b[1]);
+      const mid = [(a[0]+b[0])/2 - r.left, (a[1]+b[1])/2 - r.top];
+      if(lastD){
+        moved += 10;
+        if(lastMid){ view.tx += mid[0]-lastMid[0]; view.ty += mid[1]-lastMid[1]; }
+        zoomAt(view.k * (d / lastD), mid[0], mid[1]);
+      }
+      lastD = d; lastMid = mid;
+    }
+  });
+
+  const end = e => {
+    pts.delete(e.pointerId);
+    if(pts.size < 2){ lastD = 0; lastMid = null; }
+    if(pts.size === 0) box.classList.remove("dragging");
+  };
+  box.addEventListener("pointerup", end);
+  box.addEventListener("pointercancel", end);
+
+  /* ドラッグした直後のクリックでふきだしが開かないように */
+  box.addEventListener("click", e => {
+    if(moved > 8){ moved = 0; return; }
+    if(!e.target.closest(".pin:not(.venue)") && !e.target.closest(".tip")) hideTip();
+  }, true);
+
+  box.addEventListener("wheel", e => {
+    e.preventDefault();
+    const r = box.getBoundingClientRect();
+    zoomAt(view.k * (e.deltaY < 0 ? 1.18 : 1/1.18), e.clientX - r.left, e.clientY - r.top);
+  }, { passive:false });
+
+  box.addEventListener("dblclick", e => {
+    const r = box.getBoundingClientRect();
+    zoomAt(view.k >= 3.9 ? 1 : view.k * 1.8, e.clientX - r.left, e.clientY - r.top);
+  });
+
+  box.querySelector(".mapctl").addEventListener("click", e => {
+    const b = e.target.closest("button");
+    if(!b) return;
+    if(b.dataset.z === "in")  zoomAt(view.k * 1.5, W0/2, H0/2);
+    if(b.dataset.z === "out") zoomAt(view.k / 1.5, W0/2, H0/2);
+    if(b.dataset.z === "reset"){ view.k = 1; view.tx = 0; view.ty = 0; applyView(); }
+  });
+
+  addEventListener("resize", () => { measure(); applyView(); });
+  measure();
+  applyView();
+}
+
+/* ============ ピンの配置 ============ */
+/* 画面上の座標で重なりを判定するので、拡大するほど自然にほどけます */
+function placePins(){
+  const box = document.getElementById("illmap");
+  if(!box || !W0) return;
+
+  const scr = (lng, lat) => [
+    px(lng) / MAPW * W0 * view.k + view.tx,
+    py(lat) / MAPH * H0 * view.k + view.ty
+  ];
+
+  const GAP = view.k >= 1.4 ? 30 : 21;            /* 画面上でこれ以上は近づけない(px)。全体表示では小さいピン */
+  const placed = [scr(VENUE.lng, VENUE.lat)];
+
+  const vp = box.querySelector(".pin.venue"), vl = box.querySelector(".venue-label");
+  if(vp){ vp.style.left = placed[0][0] + "px"; vp.style.top = placed[0][1] + "px"; }
+  if(vl){ vl.style.left = placed[0][0] + "px"; vl.style.top = placed[0][1] + "px"; }
+
+  let leads = "";
+  box.querySelectorAll(".pin:not(.venue)").forEach((el, i) => {
+    const s = CURRENT[i];
+    if(!s) return;
+    const [ox, oy] = scr(s.lng, s.lat);
+    let x = ox, y = oy, n = 0;
+    const out = (x, y) => x < 15 || x > W0 - 15 || y < 15 || y > H0 - 15;
+    while((placed.some(([a,b]) => Math.hypot(a-x, b-y) < GAP) || (n > 0 && !out(ox, oy) && out(x, y))) && n < 60){
+      const ang = n * 1.9, rad = GAP * (1 + n * 0.16);
+      x = ox + Math.cos(ang) * rad;
+      y = oy + Math.sin(ang) * rad * 0.85;
+      n++;
+    }
+    placed.push([x,y]);
+    if(Math.hypot(x-ox, y-oy) > 8)
+      leads += `<line x1="${ox.toFixed(1)}" y1="${oy.toFixed(1)}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}"/><circle cx="${ox.toFixed(1)}" cy="${oy.toFixed(1)}" r="2.6"/>`;
+    el.style.left = x + "px";
+    el.style.top  = y + "px";
+    el.dataset.sx = x; el.dataset.sy = y;
+  });
+
+  const lsvg = box.querySelector(".leads");
+  if(lsvg) lsvg.innerHTML = leads;
+  placeLabels(box);
+}
+
+/* スポット名のふだ。ぶつかるものは出さない（ごちゃつかせない） */
+function placeLabels(box){
+  const boxes = [];
+  const hit = r => boxes.some(o => !(r.r < o.l || r.l > o.r || r.b < o.t || r.t > o.b));
+
+  /* 拡大・縮小ボタンの場所は避ける */
+  boxes.push({ l:W0-58, t:0, r:W0, b:128 });
+
+  /* 会場名は必ず出す */
+  const vl = box.querySelector(".venue-label");
+  if(vl){
+    const rr = vl.getBoundingClientRect(), bb = box.getBoundingClientRect();
+    boxes.push({ l:rr.left-bb.left, t:rr.top-bb.top, r:rr.right-bb.left, b:rr.bottom-bb.top });
+  }
+
+  box.querySelectorAll(".pin:not(.venue)").forEach(pin => {
+    const lb = box.querySelector(`.plabel[data-name="${CSS.escape(pin.dataset.name)}"]`);
+    if(!lb) return;
+    const x = +pin.dataset.sx, y = +pin.dataset.sy;
+
+    lb.style.display = "";
+    lb.classList.remove("left");
+    const w = lb.offsetWidth, h = lb.offsetHeight;
+
+    let l = x + 17;
+    if(l + w > W0 - 6 && x - 17 - w > 6){ l = x - 17 - w; lb.classList.add("left"); }
+    l = Math.max(6, Math.min(l, W0 - w - 6));
+
+    const r = { l, t:y - h/2, r:l + w, b:y + h/2 };
+    if(hit(r) || x < -40 || x > W0 + 40 || y < -40 || y > H0 + 40){
+      lb.style.display = "none";
+      return;
+    }
+    boxes.push(r);
+    lb.style.left = (lb.classList.contains("left") ? l + w : l) + "px";
+    lb.style.top  = y + "px";
+  });
+}
+
+function syncMap(list){
+  const box = document.getElementById("illmap");
+  if(!box || !box.querySelector("svg:not(.compass):not(.leads)")) return;
+
+  box.querySelectorAll(".pin:not(.venue), .plabel").forEach(p => p.remove());
+  hideTip();
+
+  CURRENT = list.filter(s => s.lat && s.lng);
+
+  CURRENT.forEach(s => {
+    const el = document.createElement("div");
+    el.className = "pin";
+    el.textContent = pad(s.no);
+    el.dataset.name = s.name;
+    el.addEventListener("click", () => showTip(s, el));
+    box.appendChild(el);
+
+    const lb = document.createElement("div");
+    lb.className = "plabel";
+    lb.dataset.name = s.name;
+    lb.textContent = s.name;
+    box.appendChild(lb);
+  });
+
+  measure();
+  placePins();
+}
+
+/* ================= スポットの詳細シート ================= */
+const esc = t => String(t).replace(/"/g, "&quot;");
+
+function openSheet(name){
+  const s = SPOTS.find(x => x.name === name);
+  if(!s) return;
+  const sheet = document.getElementById("sheet"), bg = document.getElementById("sheetBg");
+
+  sheet.innerHTML = `
+    <div class="grab"></div>
+    ${s.img ? `<div class="photo"><img src="${s.img}" alt="${esc(s.name)}"></div>` : ""}
+    ${s.img && s.credit ? `<div class="cred">photo: ${s.credit}</div>` : ""}
+    <div class="body">
+      <div class="sno">${pad(s.no)}</div>
+      <h3>${s.name}</h3>
+      <div class="meta ${s.by}">
+        <i></i><span class="who">${NAMES[s.by]}のおすすめ</span>
+        <span class="sep">/</span><span>${s.cat}</span>
+        <span class="sep">/</span><span>${s.city}</span>
+      </div>
+      <p class="desc${s.comment ? "" : " todo"}">${s.comment || "コメント待ち　—　ここにお二人の一言が入ります"}</p>
+      <div class="tags">${(s.tags||[]).map(t => `<span class="tag">${t}</span>`).join("")}</div>
+      ${s.web ? `<a class="web" href="${s.web}" target="_blank" rel="noopener">公式サイトを見る →</a>` : ""}
+      <div class="acts">
+        <a class="go" href="${mapUrl(s)}" target="_blank" rel="noopener">Googleマップで開く</a>
+        <button class="close" type="button">閉じる</button>
+      </div>
+    </div>`;
+
+  sheet.hidden = false; bg.hidden = false;
+  void sheet.offsetHeight;                       /* 一度レイアウトさせてから動かす */
+  sheet.classList.add("on"); bg.classList.add("on");
+  document.body.style.overflow = "hidden";
+  sheet.querySelector(".close").addEventListener("click", closeSheet);
+}
+
+function closeSheet(){
+  const sheet = document.getElementById("sheet"), bg = document.getElementById("sheetBg");
+  sheet.classList.remove("on"); bg.classList.remove("on");
+  document.body.style.overflow = "";
+  setTimeout(() => { sheet.hidden = true; bg.hidden = true; }, 320);
+}
+
+document.getElementById("sheetBg").addEventListener("click", closeSheet);
+addEventListener("keydown", e => { if(e.key === "Escape") closeSheet(); });
+
+function showTip(s, el){
+  document.querySelectorAll("#illmap .pin").forEach(p => p.classList.remove("act"));
+  el.classList.add("act");
+  ACTIVE = s;
+  openSheet(s.name);
+}
+
+function hideTip(){
+  ACTIVE = null;
+  document.querySelectorAll("#illmap .pin").forEach(p => p.classList.remove("act"));
+}
+
+
+document.getElementById("cards").addEventListener("click", e => {
+  const c = e.target.closest(".cell");
+  if(c) openSheet(c.dataset.name);
+});
+
+function wireGroup(id, key){
+  document.getElementById(id).addEventListener("click", e => {
+    const chip = e.target.closest(".chip");
+    if(!chip) return;
+    document.querySelectorAll("#" + id + " .chip").forEach(c => c.classList.toggle("on", c === chip));
+    state[key] = chip.dataset.v;
+    render();
+  });
+}
+wireGroup("fCat", "cat");
+wireGroup("fArea", "area");
+
+document.getElementById("resetBtn").addEventListener("click", () => {
+  state.cat = ""; state.area = "";
+  document.querySelectorAll(".frow .chip").forEach(c => c.classList.toggle("on", c.dataset.v === ""));
+  render();
+});
+
+buildFilters();
+buildMap();   /* 中で render() を呼ぶ */
+</script>
 </body>
 </html>
