@@ -57,25 +57,26 @@ body{background:var(--bg);color:var(--ink);font-family:var(--jp);line-height:1.9
 }
 .chip small{font-family:var(--en);font-weight:600;font-size:10px;color:var(--ink3)}
 /* 地方の色 */
-.rs{--rg:#b8532d;--rgp:#f7e6dc}
-.rc{--rg:#1f6f78;--rgp:#dbeced}
-.rn{--rg:#4c7a44;--rgp:#e2ecdc}
-.chip.reg{align-items:center;background:transparent;border-color:var(--rgp);border-width:1.5px;color:var(--rg);font-weight:700}
-.chip.reg::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--rg);margin-right:2px}
-.chip.city{background:transparent;border-color:var(--rgp);border-width:1.5px;color:var(--rg)}
-.chip.city small{color:var(--rg);opacity:.65}
-.chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+/* カテゴリの色 */
+.k-food{--cg:#c65a34;--cgp:#f5ddd2}   /* ごはん：赤瓦 */
+.k-cafe{--cg:#7a5238;--cgp:#eadfd6}   /* カフェ：コーヒー */
+.k-nat {--cg:#4c7a44;--cgp:#dde8d8}   /* 自然：やんばるの森 */
+.k-exp {--cg:#1f6f78;--cgp:#d5e9ea}   /* 体験：海 */
+.k-shop{--cg:#b0507a;--cgp:#f2dbe5}   /* 買い物：ブーゲンビリア */
+.k-etc {--cg:#6b7475;--cgp:#e3e5e4}   /* その他 */
+.chip.cat{align-items:center;border-color:var(--cgp);border-width:1.5px;color:var(--cg);font-weight:700}
+.chip.cat::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--cg);margin-right:2px}
+.chip.cat small{color:var(--cg);opacity:.6}
+.chip.cat.on{background:var(--cg);border-color:var(--cg);color:#fff}
+.chip.cat.on::before{background:#fff}
+.chip.cat.on small{color:#fff;opacity:.8}
+b.k-food,b.k-cafe,b.k-nat,b.k-exp,b.k-shop,b.k-etc,.kt{color:var(--cg);font-weight:700}
+h2.kt{font-weight:900}
+.chip.reg{font-weight:700}
 .chip.on small{color:var(--sand);opacity:1}
-.chip.reg.on,.chip.city.on{background:var(--rg);border-color:var(--rg);color:#fff}
-.chip.reg.on::before{background:#fff}
-.chip.city.on small{color:#fff;opacity:.8}
-b.rs,b.rc,b.rn,.rt{color:var(--rg);font-weight:700}
-h2.rt{font-weight:900}
-.chip.reg small{color:var(--rg);opacity:.65}
-.chip.reg.on small{color:#fff;opacity:.8}
 .cityrow .lab{position:relative;height:28px}
 @media(max-width:420px){.frow .lab{width:68px;padding-left:18px}.chips{gap:6px;padding-right:18px}}
-.cityrow .lab::after{content:"";position:absolute;right:14px;top:-4px;width:12px;height:18px;border-left:2px solid var(--rg);border-bottom:2px solid var(--rg);border-bottom-left-radius:6px;opacity:.5}
+.cityrow .lab::after{content:"";position:absolute;right:14px;top:-4px;width:12px;height:18px;border-left:2px solid #cfcbc0;border-bottom:2px solid #cfcbc0;border-bottom-left-radius:6px;opacity:.5}
 
 /* ================= 地図 ================= */
 .mapsec{background:var(--sea-pale);padding:var(--s4) 0 var(--s4)}
@@ -94,8 +95,8 @@ h2.rt{font-weight:900}
 .illmap.zoomed{touch-action:none}
 .illmap.dragging{cursor:grabbing}
 .illmap .leads{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;overflow:visible}
-.illmap .leads line{stroke:var(--sea);stroke-width:1.2;opacity:.55}
-.illmap .leads circle{fill:var(--sea)}
+.illmap .leads line{stroke:var(--cg,var(--sea));stroke-width:1.2;opacity:.55}
+.illmap .leads circle{fill:var(--cg,var(--sea))}
 .illmap > svg:not(.compass):not(.leads){position:absolute;inset:0;width:100%;height:100%;display:block;transform-origin:0 0}
 
 .illmap .land path{fill:var(--sand);stroke:#fff;stroke-width:var(--sw,2.4px);stroke-linejoin:round;vector-effect:non-scaling-stroke}
@@ -123,7 +124,7 @@ h2.rt{font-weight:900}
 
 .pin{
   position:absolute;transform:translate(-50%,-50%);z-index:3;
-  width:26px;height:26px;border-radius:50%;background:var(--rg,var(--sea));border:2px solid #fff;
+  width:26px;height:26px;border-radius:50%;background:var(--cg,var(--sea));border:2px solid #fff;
   display:flex;align-items:center;justify-content:center;cursor:pointer;
   font-family:var(--en);font-weight:700;font-size:11px;color:#fff;letter-spacing:0;
   box-shadow:0 1px 4px rgba(20,60,64,.25);
@@ -131,17 +132,16 @@ h2.rt{font-weight:900}
   -webkit-tap-highlight-color:transparent;
 }
 .illmap:not(.detail) .pin:not(.venue){width:19px;height:19px;font-size:8.5px;border-width:1.5px}
-.pin.act{transform:translate(-50%,-50%) scale(1.25);z-index:6;box-shadow:0 0 0 2px #fff,0 0 0 4px var(--rg,var(--sea))}
-.pin.venue{width:34px;height:34px;background:#fff;border:3px solid var(--venue);color:var(--venue);
+.pin.act{transform:translate(-50%,-50%) scale(1.25);z-index:6;box-shadow:0 0 0 2px #fff,0 0 0 4px var(--cg,var(--sea))}
+.pin.venue{width:34px;height:34px;background:#fff;border:3px solid var(--ink);color:var(--ink);
   font-family:var(--jp);font-size:10px;z-index:4;cursor:default}
 .plabel{
-  position:absolute;z-index:2;transform:translate(0,-50%);pointer-events:none;white-space:nowrap;
+  position:absolute;z-index:2;pointer-events:none;white-space:nowrap;
   font-size:11px;font-weight:500;letter-spacing:.02em;color:var(--ink);
   background:#fff;border-radius:3px;padding:2px 7px;box-shadow:0 1px 3px rgba(20,60,64,.12);
-  opacity:0;transition:opacity .25s;max-width:150px;overflow:hidden;text-overflow:ellipsis;
+  opacity:0;transition:opacity .25s;max-width:170px;overflow:hidden;text-overflow:ellipsis;
 }
 .illmap.detail .plabel{opacity:1}
-.plabel.left{transform:translate(-100%,-50%)}
 
 /* ================= 一覧 ================= */
 .list{padding:var(--s4) 0 var(--s5)}
@@ -158,7 +158,7 @@ h2.rt{font-weight:900}
   .cell:hover .m,.cell:hover p{color:inherit;opacity:.85}
   .cell:hover .no{color:var(--sand)}
 }
-.cell .no{font-family:var(--en);font-weight:700;font-size:11px;letter-spacing:.04em;color:var(--rg,var(--sea))}
+.cell .no{font-family:var(--en);font-weight:700;font-size:11px;letter-spacing:.04em;color:var(--cg,var(--sea))}
 .cell h3{font-weight:700;font-size:16px;line-height:1.6}
 .cell .m{margin-top:2px;font-size:11.5px;font-weight:500;letter-spacing:.06em;color:var(--ink3)}
 .cell p{margin-top:10px;font-size:12.5px;line-height:1.9;color:var(--ink2);
@@ -179,7 +179,7 @@ h2.rt{font-weight:900}
 .sheet .photo img{width:100%;height:100%;object-fit:cover;display:block}
 .sheet .cred{margin:6px 22px 0;font-size:9.5px;color:var(--ink3);text-align:right}
 .sheet .body{padding:22px 22px 32px}
-.sheet .sno{font-family:var(--en);font-weight:700;font-size:12px;letter-spacing:.14em;color:var(--rg,var(--sea))}
+.sheet .sno{font-family:var(--en);font-weight:700;font-size:12px;letter-spacing:.14em;color:var(--cg,var(--sea))}
 .sheet h3{margin-top:4px;font-weight:900;font-size:21px;line-height:1.55}
 .sheet .meta{margin-top:8px;display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:12px;font-weight:500;color:var(--ink3)}
 .sheet .meta i{display:none}
@@ -231,11 +231,11 @@ footer .c{margin-top:var(--s4);font-size:10px;opacity:.4}
 <section class="mapsec"><div class="wrap">
   <div class="hd"><h2>地図</h2><span>THE MAP</span></div>
   <div class="mapbox"><div class="illmap" id="illmap"></div></div>
-  <p class="maphint">番号をタップすると、その場所の紹介が開きます。2本指でひろげると拡大できます。</p>
+  <p class="maphint">ピンの色はカテゴリ（上のボタンと同じ色）です。番号をタップすると紹介が開きます。2本指でひろげると拡大できます。</p>
 </div></section>
 
 <section class="list"><div class="wrap">
-  <div class="hd"><h2 id="listTitle">ぜんぶ</h2><div class="r"><button id="resetBtn" hidden>絞り込みを外す</button><span id="count"></span></div></div>
+  <div class="hd"><h2 id="listTitle">一覧</h2><div class="r"><button id="resetBtn" hidden>絞り込みを外す</button><span id="count"></span></div></div>
   <div class="grid" id="cards"></div>
   <p class="empty" id="empty" hidden>この組み合わせの場所はありません。</p>
 </div></section>
@@ -362,9 +362,9 @@ const REGION = {
   "北部":["名護市","本部町","大宜味村","東村"],
 };
 const CITIES = [].concat(REGION["南部"], REGION["中部"], REGION["北部"]);
-const RCLS = { "南部":"rs", "中部":"rc", "北部":"rn" };            /* 地方の色：南=赤瓦、中=海、北=やんばるの森 */
-const regionOf = city => Object.keys(REGION).find(r => REGION[r].includes(city));
-const RCOL = { "南部":"#b8532d", "中部":"#1f6f78", "北部":"#4c7a44" };
+/* カテゴリの色（CSSの .k-〇〇 と対応） */
+const KCLS = { "ごはん":"k-food", "カフェ":"k-cafe", "自然":"k-nat", "体験":"k-exp", "買い物":"k-shop", "その他":"k-etc" };
+const kc = s => KCLS[s.cat] || "k-etc";
 const CATS = ["ごはん","カフェ","自然","体験","買い物","その他"];
 
 const state = { cat:"", region:"", city:"" };
@@ -376,21 +376,21 @@ function buildFilters(){
   document.getElementById("fCat").innerHTML =
     `<button class="chip on" data-v="">すべて</button>` +
     CATS.filter(c => cnt(s => s.cat === c))
-        .map(c => `<button class="chip" data-v="${c}">${c}<small>${cnt(s => s.cat === c)}</small></button>`).join("");
+        .map(c => `<button class="chip cat ${KCLS[c]}" data-v="${c}">${c}<small>${cnt(s => s.cat === c)}</small></button>`).join("");
   document.getElementById("fArea").innerHTML =
     `<button class="chip on" data-v="">すべて</button>` +
     Object.keys(REGION).map(r =>
-      `<button class="chip reg ${RCLS[r]}" data-v="${r}">${r}</button>`).join("");
+      `<button class="chip reg" data-v="${r}">${r}</button>`).join("");
 }
 
 function buildCities(){
   const r = state.region, row = document.getElementById("cityRow");
   row.hidden = !r;
-  row.className = "frow cityrow " + (r ? RCLS[r] : "");
+  row.className = "frow cityrow";
   if(!r) return;
   const cnt = c => SPOTS.filter(s => s.city === c).length;
   document.getElementById("fCity").innerHTML = REGION[r].filter(cnt).map(c =>
-    `<button class="chip city ${RCLS[r]}${state.city === c ? " on" : ""}" data-v="${c}">${c}<small>${cnt(c)}</small></button>`).join("");
+    `<button class="chip city${state.city === c ? " on" : ""}" data-v="${c}">${c}<small>${cnt(c)}</small></button>`).join("");
 }
 
 function render(){
@@ -399,9 +399,9 @@ function render(){
 
   document.getElementById("cards").innerHTML = list.map(s => `
     <article class="cell" data-name="${esc(s.name)}">
-      <div class="no ${RCLS[regionOf(s.city)]}">${pad(s.no)}</div>
+      <div class="no ${kc(s)}">${pad(s.no)}</div>
       <h3>${s.name}</h3>
-      <div class="m"><b class="${RCLS[regionOf(s.city)]}">${s.city}</b> ／ ${s.cat}</div>
+      <div class="m">${s.city} ／ <b class="${kc(s)}">${s.cat}</b></div>
       <p>${s.comment || ""}</p>
     </article>`).join("");
 
@@ -409,8 +409,8 @@ function render(){
   document.getElementById("count").textContent = filtered ? `${list.length} / ${SPOTS.length}` : `${SPOTS.length} PLACES`;
   document.getElementById("resetBtn").hidden = !filtered;
   document.getElementById("listTitle").textContent =
-    filtered ? [state.city || state.region, state.cat].filter(Boolean).join("・") : "ぜんぶ";
-  document.getElementById("listTitle").className = state.region ? "rt " + RCLS[state.region] : "";
+    filtered ? [state.city || state.region, state.cat].filter(Boolean).join("・") : "一覧";
+  document.getElementById("listTitle").className = state.cat ? "kt " + KCLS[state.cat] : "";
 
   syncMap(list);
 }
@@ -692,7 +692,7 @@ function measure(){
 }
 
 function clampView(){
-  view.k = clamp(view.k, 1, 4);
+  view.k = clamp(view.k, 1, 6);
   view.tx = clamp(view.tx, W0 - W0 * view.k, 0);
   view.ty = clamp(view.ty, H0 - H0 * view.k, 0);
 }
@@ -724,7 +724,7 @@ function applyView(){
 
 /* ある一点を中心に拡大する */
 function zoomAt(k2, cx, cy){
-  k2 = clamp(k2, 1, 4);
+  k2 = clamp(k2, 1, 6);
   const r = k2 / view.k;
   view.tx = cx - (cx - view.tx) * r;
   view.ty = cy - (cy - view.ty) * r;
@@ -790,7 +790,7 @@ function setupZoom(box){
 
   box.addEventListener("dblclick", e => {
     const r = box.getBoundingClientRect();
-    zoomAt(view.k >= 3.9 ? 1 : view.k * 1.8, e.clientX - r.left, e.clientY - r.top);
+    zoomAt(view.k >= 5.9 ? 1 : view.k * 1.8, e.clientX - r.left, e.clientY - r.top);
   });
 
   box.querySelector(".mapctl").addEventListener("click", e => {
@@ -839,7 +839,7 @@ function placePins(){
     }
     placed.push([x,y]);
     if(Math.hypot(x-ox, y-oy) > 8)
-      leads += `<g><line x1="${ox.toFixed(1)}" y1="${oy.toFixed(1)}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}"/><circle cx="${ox.toFixed(1)}" cy="${oy.toFixed(1)}" r="2.6"/></g>`;
+      leads += `<g class="${kc(s)}"><line x1="${ox.toFixed(1)}" y1="${oy.toFixed(1)}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}"/><circle cx="${ox.toFixed(1)}" cy="${oy.toFixed(1)}" r="2.6"/></g>`;
     el.style.left = x + "px";
     el.style.top  = y + "px";
     el.dataset.sx = x; el.dataset.sy = y;
@@ -850,42 +850,43 @@ function placePins(){
   placeLabels(box);
 }
 
-/* スポット名のふだ。ぶつかるものは出さない（ごちゃつかせない） */
+/* スポット名のふだ。右・左・下・上の順に空いている場所をさがして置く。
+   ほかのピンや、ほかのふだ、拡大ボタン、方位記号の上には重ねない。どこも空いていなければ出さない */
 function placeLabels(box){
   const boxes = [];
-  const hit = r => boxes.some(o => !(r.r < o.l || r.l > o.r || r.b < o.t || r.t > o.b));
+  const hit = r => boxes.some(o => !(r.r <= o.l || r.l >= o.r || r.b <= o.t || r.t >= o.b));
+  const inside = r => r.l >= 4 && r.r <= W0 - 4 && r.t >= 4 && r.b <= H0 - 4;
 
-  /* 拡大・縮小ボタンの場所は避ける */
-  boxes.push({ l:W0-58, t:0, r:W0, b:128 });
+  boxes.push({ l:W0-58, t:0, r:W0, b:150 });              /* 拡大・縮小ボタン */
+  boxes.push({ l:W0-72, t:H0-72, r:W0, b:H0 });           /* 方位記号 */
 
-  /* 会場名は必ず出す */
-  const vl = box.querySelector(".venue-label");
-  if(vl){
-    const rr = vl.getBoundingClientRect(), bb = box.getBoundingClientRect();
-    boxes.push({ l:rr.left-bb.left, t:rr.top-bb.top, r:rr.right-bb.left, b:rr.bottom-bb.top });
-  }
+  /* ピンそのものを先に「置けない場所」として登録する */
+  const P = 15;
+  box.querySelectorAll(".pin").forEach(p => {
+    const x = parseFloat(p.style.left), y = parseFloat(p.style.top);
+    const r = p.classList.contains("venue") ? 19 : P;
+    boxes.push({ l:x-r, t:y-r, r:x+r, b:y+r });
+  });
 
   box.querySelectorAll(".pin:not(.venue)").forEach(pin => {
     const lb = box.querySelector(`.plabel[data-name="${CSS.escape(pin.dataset.name)}"]`);
     if(!lb) return;
     const x = +pin.dataset.sx, y = +pin.dataset.sy;
-
     lb.style.display = "";
-    lb.classList.remove("left");
-    const w = lb.offsetWidth, h = lb.offsetHeight;
+    const w = lb.offsetWidth, h = lb.offsetHeight, g = P + 3;
 
-    let l = x + 17;
-    if(l + w > W0 - 6 && x - 17 - w > 6){ l = x - 17 - w; lb.classList.add("left"); }
-    l = Math.max(6, Math.min(l, W0 - w - 6));
+    const cands = [
+      { l:x + g,       t:y - h/2 },          /* 右 */
+      { l:x - g - w,   t:y - h/2 },          /* 左 */
+      { l:x - w/2,     t:y + g - 2 },        /* 下 */
+      { l:x - w/2,     t:y - g + 2 - h },    /* 上 */
+    ].map(c => ({ l:c.l, t:c.t, r:c.l + w, b:c.t + h }));
 
-    const r = { l, t:y - h/2, r:l + w, b:y + h/2 };
-    if(hit(r) || x < -40 || x > W0 + 40 || y < -40 || y > H0 + 40){
-      lb.style.display = "none";
-      return;
-    }
-    boxes.push(r);
-    lb.style.left = (lb.classList.contains("left") ? l + w : l) + "px";
-    lb.style.top  = y + "px";
+    const ok = cands.find(r => inside(r) && !hit(r));
+    if(!ok){ lb.style.display = "none"; return; }
+    boxes.push(ok);
+    lb.style.left = ok.l + "px";
+    lb.style.top  = ok.t + "px";
   });
 }
 
@@ -900,17 +901,13 @@ function syncMap(list){
 
   CURRENT.forEach(s => {
     const el = document.createElement("div");
-    el.className = "pin";
+    el.className = "pin " + kc(s);
     el.textContent = pad(s.no);
     el.dataset.name = s.name;
     el.addEventListener("click", () => showTip(s, el));
     box.appendChild(el);
 
-    const lb = document.createElement("div");
-    lb.className = "plabel";
-    lb.dataset.name = s.name;
-    lb.textContent = s.name;
-    box.appendChild(lb);
+    /* 地図には名前を出さない。カテゴリはピンの色で見せ、名前はタップした詳細で出す */
   });
 
   measure();
@@ -930,12 +927,12 @@ function openSheet(name){
     ${s.img ? `<div class="photo"><img src="${s.img}" alt="${esc(s.name)}"></div>` : ""}
     ${s.img && s.credit ? `<div class="cred">photo: ${s.credit}</div>` : ""}
     <div class="body">
-      <div class="sno ${RCLS[regionOf(s.city)]}">${pad(s.no)}</div>
+      <div class="sno ${kc(s)}">${pad(s.no)}</div>
       <h3>${s.name}</h3>
       <div class="meta ${s.by}">
         <i></i><span class="who">${NAMES[s.by]}のおすすめ</span>
-        <span class="sep">/</span><span>${s.cat}</span>
-        <span class="sep">/</span><b class="${RCLS[regionOf(s.city)]}">${s.city}</b>
+        <span class="sep">/</span><b class="${kc(s)}">${s.cat}</b>
+        <span class="sep">/</span><span>${s.city}</span>
       </div>
       <p class="desc${s.comment ? "" : " todo"}">${s.comment || "コメント待ち　—　ここにお二人の一言が入ります"}</p>
       <div class="tags">${(s.tags||[]).map(t => `<span class="tag">${t}</span>`).join("")}</div>
@@ -1001,7 +998,7 @@ document.getElementById("fArea").addEventListener("click", e => {
 document.getElementById("fCity").addEventListener("click", e => {
   const chip = e.target.closest(".chip");
   if(!chip) return;
-  state.city = state.city === chip.dataset.v ? "" : chip.dataset.v;   /* もう一度押すと地方ぜんぶに戻る */
+  state.city = state.city === chip.dataset.v ? "" : chip.dataset.v;   /* もう一度押すと地方一覧に戻る */
   buildCities(); render();
 });
 
