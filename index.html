@@ -82,6 +82,9 @@ h2.kt{font-weight:900}
 
 /* ================= 地図 ================= */
 .mapsec{background:var(--sea-pale);padding:var(--s4) 0 var(--s4)}
+body.onlymap .hero,body.onlymap .filters,body.onlymap .list,body.onlymap footer{display:none}
+body.onlymap .mapsec .hd,body.onlymap .maphint{display:none}
+body.onlymap .mapsec{padding:10px 0 12px}
 .hd{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s2)}
 .hd h2{font-weight:900;font-size:26px;letter-spacing:.06em}
 .hd span{font-family:var(--en);font-weight:700;font-size:11px;letter-spacing:.18em;color:var(--ink3)}
@@ -379,8 +382,11 @@ const ICONS = {
 };
 const icon = cat => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${ICONS[cat] || ICONS["その他"]}</svg>`;
 
-/* ▼ 地図のピンに出すもの。"icon" = カテゴリのマーク ／ "number" = 番号 */
-const PIN_MARK = "icon";
+/* ▼ 地図のピンに出すもの。"icon" = カテゴリのマーク ／ "number" = 番号
+   比較用に ?mark=number で番号、?view=map で地図だけ表示できる */
+const QS = new URLSearchParams(location.search);
+const PIN_MARK = QS.get("mark") === "number" ? "number" : "icon";
+if(QS.get("view") === "map") document.body.classList.add("onlymap");
 const CATS = ["ごはん","カフェ","自然","体験","買い物","その他"];
 
 const state = { cat:"", region:"", city:"" };

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>マーク / 番号 くらべる</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fdfcf8; --ink:#2f3435; --sea:#1f6f78; --sea-pale:#e6f1f0; --line:#e0ddd3;
+  --jp:"Zen Maru Gothic",system-ui,sans-serif; --en:"Quicksand",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--jp);line-height:1.9;letter-spacing:.02em;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+
+header{padding:36px 0 22px}
+header .en{font-family:var(--en);font-size:11px;letter-spacing:.22em;color:var(--sea);opacity:.75}
+header h1{font-size:21px;font-weight:700;margin-top:6px;letter-spacing:.04em}
+header p{margin-top:10px;font-size:13px;line-height:1.95;color:#5d6566}
+
+.cols{display:grid;gap:26px;padding-bottom:28px}
+@media (min-width:880px){ .cols{grid-template-columns:1fr 1fr;gap:22px} }
+
+.panel{border:1px solid var(--line);border-radius:16px;background:#fff;overflow:hidden}
+.phd{display:flex;align-items:baseline;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.phd .tag{font-family:var(--en);font-size:11px;letter-spacing:.18em;color:var(--sea);opacity:.8}
+.phd h2{font-size:15px;font-weight:700;letter-spacing:.05em}
+.phd .sub{margin-left:auto;font-size:11px;color:#8a9192}
+.panel iframe{display:block;width:100%;border:0;background:var(--sea-pale)}
+
+.note{border-top:1px dashed var(--line);padding:22px 0 56px;font-size:12.5px;line-height:2;color:#5d6566}
+.note b{color:var(--ink)}
+.note ul{margin:8px 0 0 1.1em}
+.note li{margin-top:2px}
+.back{display:inline-block;margin-top:16px;font-size:12px;color:var(--sea);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <p class="en">MARK or NUMBER</p>
+    <h1>地図のピン、くらべる用</h1>
+    <p>同じ地図を、ピンの中身だけ変えて並べています。指でひろげると拡大、タップすると紹介が開くのは今のページと同じです。</p>
+  </header>
+
+  <div class="cols">
+    <section class="panel">
+      <div class="phd"><span class="tag">A</span><h2>カテゴリのマーク</h2><span class="sub">いまの公開ページ</span></div>
+      <iframe data-src="index.html?view=map&mark=icon" title="マークの地図" loading="eager"></iframe>
+    </section>
+    <section class="panel">
+      <div class="phd"><span class="tag">B</span><h2>番号</h2><span class="sub">紙版とそろえる案</span></div>
+      <iframe data-src="index.html?view=map&mark=number" title="番号の地図" loading="eager"></iframe>
+    </section>
+  </div>
+
+  <div class="note">
+    <b>ちがい</b>
+    <ul>
+      <li>A マーク：何の店かが地図だけで分かる。番号を探す手間がない。</li>
+      <li>B 番号：一覧・詳細の番号とそのままつながる。紙版と同じ見え方。</li>
+      <li>どちらも色はカテゴリを表します。名前は出さず、タップで見せる形は共通です。</li>
+    </ul>
+    <a class="back" href="index.html">本体のページへもどる</a>
+  </div>
+</div>
+
+<script>
+/* 中の地図の高さに合わせる（724:900 の地図＋説明文ぶん） */
+function fit(){
+  document.querySelectorAll(".panel iframe").forEach(f => {
+    let h = 0;
+    try{ h = f.contentDocument.documentElement.scrollHeight; }catch(e){}
+    if(!h) h = Math.round(22 + (f.clientWidth - 44) * (900 / 724) + 24);
+    f.style.height = h + "px";
+  });
+}
+document.querySelectorAll(".panel iframe").forEach(f => {
+  f.addEventListener("load", () => { fit(); setTimeout(fit, 250); });
+  f.src = f.dataset.src;
+});
+fit();
+addEventListener("resize", fit);
+addEventListener("load", fit);
+</script>
+</body>
+</html>
