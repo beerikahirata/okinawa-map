@@ -138,6 +138,13 @@ body.onlymap .mapsec{padding:10px 0 12px}
 }
 .illmap:not(.detail) .pin:not(.venue){width:19px;height:19px;font-size:8.5px;border-width:1.5px}
 .pin.act{transform:translate(-50%,-50%) scale(1.25);z-index:6;box-shadow:0 0 0 2px #fff,0 0 0 4px var(--cg,var(--sea))}
+.cpin{position:absolute;transform:translate(-50%,-50%);z-index:5;width:25px;height:25px;border-radius:50%;
+  background:var(--sea);border:2px solid #fff;color:#fff;display:flex;align-items:center;justify-content:center;
+  font-family:var(--en);font-weight:700;font-size:11px;cursor:pointer;
+  box-shadow:0 1px 5px rgba(20,60,64,.3);-webkit-tap-highlight-color:transparent}
+.cpin.solo{background:var(--cg,var(--sea))}
+.cpin::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--cg,var(--sea));opacity:.35}
+.illmap.detail .cpin{width:29px;height:29px;font-size:12px}
 .pin.venue{width:34px;height:34px;background:#fff;border:3px solid var(--ink);color:var(--ink);
   font-family:var(--jp);font-size:10px;z-index:4;cursor:default}
 .plabel{
@@ -391,6 +398,42 @@ const SPOTS = [
   { name:"ゴリラチョップ（崎本部緑地）", city:"本部町", area:"北部", cat:"自然", when:["前日","翌日"], by:"both",
     lat:26.6370287, lng:127.8823477, q:"崎本部緑地 ゴリラチョップ",
     comment:"ゴリラが手刀（チョップ）をしているように見える岩が目印。比較的セルフでもシュノーケルしやすい場所で、「こんなところにサンゴが？」という海が見られます。", tags:["シュノーケル","岩が目印","設備あり"], todo:false },
+  { name:"阿吽（あうん）", city:"本部町", area:"北部", cat:"カフェ", when:["前日","翌日"], by:"both",
+    lat:26.6685051, lng:127.9139223, q:"阿吽 本部町 山里",
+    comment:"本部の山里にある、のんびりしたカフェ。となりの工房（もとぶ南蛮窯）で、やちむんも買えます。絵梨香もここで器を買いました。", tags:["やちむんが買える","工房がとなり"], todo:false },
+  { name:"カフェ こくう", city:"今帰仁村", area:"北部", cat:"カフェ", when:["前日","翌日"], by:"both",
+    lat:26.6799769, lng:127.9419215, q:"カフェ こくう 今帰仁村",
+    comment:"今帰仁の高台にある、木のぬくもりのあるカフェ。地元の野菜を使ったプレートが名物で、窓の外には畑と海が広がります。", tags:["高台","地元の野菜","海が見える"], todo:false },
+  { name:"やちむん喫茶シーサー園", city:"本部町", area:"北部", cat:"カフェ", when:["前日","翌日"], by:"both",
+    lat:26.6438348, lng:127.9411989, q:"やちむん喫茶シーサー園 本部町",
+    comment:"本部・伊豆味の古民家の喫茶。赤瓦の屋根にシーサーがずらりと並んでいます。", tags:["古民家","シーサー","山のなか"], todo:false },
+  { name:"伊豆味そば（いずみそば）", city:"本部町", area:"北部", cat:"ごはん", when:["前日","翌日"], by:"both",
+    lat:26.6433011, lng:127.9398516, q:"伊豆味そば 本部町",
+    comment:"評判はずっと聞いているのに、タイミングが合わずまだ行けていないお店。ふたりとも行ってみたい場所です。", tags:["まだ行けてない","行ってみたい"], todo:true },
+  { name:"ハコニワ", city:"本部町", area:"北部", cat:"カフェ", when:["前日","翌日"], by:"both",
+    lat:26.6440477, lng:127.955387, q:"ハコニワ 本部町 伊豆味",
+    comment:"本部・伊豆味の山のなかにある古民家のカフェ。静かで、縁側のような席から緑が見えます。", tags:["古民家","山のなか"], todo:false },
+  { name:"亜熱帯サウナ", city:"本部町", area:"北部", cat:"体験", when:["前日","翌日"], by:"both",
+    lat:26.64191, lng:127.9520747, q:"亜熱帯サウナ 本部町 伊豆味",
+    comment:"伊豆味の山のなかにあるサウナ。やんばるの緑に囲まれて外気浴ができます。", tags:["サウナ","外気浴","山のなか"], todo:false },
+  { name:"藍風（あいかぜ）", city:"本部町", area:"北部", cat:"買い物", when:["前日","翌日"], by:"both",
+    lat:26.664195, lng:127.9419367, q:"藍風 本部町 伊豆味",
+    comment:"本部・伊豆味の藍染めのお店。深い藍色の服や小物が並びます。", tags:["藍染め","山のなか"], todo:false },
+  { name:"亜熱帯茶屋", city:"本部町", area:"北部", cat:"カフェ", when:["前日","翌日"], by:"both",
+    lat:26.6670989, lng:127.9003219, q:"亜熱帯茶屋 本部町",
+    comment:"本部の高台にある、木づくりの茶屋。テラス席から海が見渡せます。", tags:["高台","海が見える","テラス席"], todo:false },
+  { name:"森の巣箱（カフェとサウナ）", city:"今帰仁村", area:"北部", cat:"カフェ", when:["前日","翌日"], by:"both",
+    lat:26.6597603, lng:127.987204, q:"森の巣箱 今帰仁村 湧川",
+    comment:"今帰仁の森のなかにある、カフェとサウナ。テラス席では、鳥の声と木のあいだを抜ける風が気持ちいいです。", tags:["サウナもある","森のなか","テラス席"], todo:false },
+  { name:"OKINAWA CACAO（沖縄カカオ）", city:"大宜味村", area:"北部", cat:"カフェ", when:["前日","翌日"], by:"both",
+    lat:26.7113633, lng:128.1627697, q:"OKINAWA CACAO 大宜味村",
+    comment:"大宜味村で、カカオからチョコレートを作っているお店。ホットチョコレートが飲めて、おみやげも買えます。", tags:["チョコレート","おみやげ"], todo:false },
+  { name:"喫茶 あがち森", city:"国頭村", area:"北部", cat:"カフェ", when:["前日","翌日"], by:"both",
+    lat:26.7339622, lng:128.1848037, q:"喫茶 あがち森 国頭村 奥間",
+    comment:"やんばるの奥、国頭村・奥間にある喫茶。森に向かう前後のひと休みにいい場所です。", tags:["やんばる","森のなか"], todo:false },
+  { name:"Bookcafe Okinawa Rail", city:"国頭村", area:"北部", cat:"カフェ", when:["前日","翌日"], by:"both",
+    lat:26.7268965, lng:128.208632, q:"Bookcafe Okinawa Rail 国頭村",
+    comment:"やんばるの森に囲まれたブックカフェ。本を読みながら、ゆっくり時間を使える場所です。", tags:["本が読める","やんばる","森のなか"], todo:false },
   { name:"アイスクリンカフェ アーク", city:"本部町", area:"北部", cat:"カフェ", when:["前日","翌日"], by:"both",
     lat:26.6678736, lng:127.8919255, q:"アイスクリンカフェ アーク 本部町",
     comment:"沖縄のアイスクリンが食べられるお店。アンティークな店内で、窓から海が見えます。パフェもあります。", tags:["アイスクリン","海が見える"], todo:false },
@@ -409,7 +452,7 @@ const pad = n => String(n).padStart(2, "0");
 const REGION = {
   "南部":["糸満市","八重瀬町","豊見城市","那覇市","南城市"],
   "中部":["浦添市","宜野湾市","北谷町","沖縄市","読谷村","うるま市","恩納村"],
-  "北部":["名護市","本部町","大宜味村","東村"],
+  "北部":["名護市","本部町","今帰仁村","大宜味村","東村","国頭村"],
 };
 const CITIES = [].concat(REGION["南部"], REGION["中部"], REGION["北部"]);
 const CITY_ORDER = {}; CITIES.forEach((c,i) => CITY_ORDER[c] = i);
@@ -798,7 +841,7 @@ function applyView(){
   box.classList.toggle("detail", view.k >= 1.4);   /* 少し拡大したらスポット名と市町村名を出す */
   const hint = box.querySelector(".zoomhint");
   if(hint) hint.textContent = view.k > 1.02 ? "×" + view.k.toFixed(1) : "";
-  placePins();
+  if(view.k !== MARK_K && CURRENT.length) buildMarkers(); else placePins();
 }
 
 /* ある一点を中心に拡大する */
@@ -904,10 +947,10 @@ function placePins(){
   if(vl){ vl.style.left = placed[0][0] + "px"; vl.style.top = placed[0][1] + "px"; }
 
   let leads = "";
-  box.querySelectorAll(".pin:not(.venue)").forEach((el, i) => {
-    const s = CURRENT[i];
-    if(!s) return;
-    const [ox, oy] = scr(s.lng, s.lat);
+  box.querySelectorAll(".pin:not(.venue), .cpin").forEach(el => {
+    const pt = el._pt;
+    if(!pt) return;
+    const [ox, oy] = scr(pt.lng, pt.lat);
     let x = ox, y = oy, n = 0;
     const out = (x, y) => x < 15 || x > W0 - 15 || y < 15 || y > H0 - 15;
     while((placed.some(([a,b]) => Math.hypot(a-x, b-y) < GAP) || (n > 0 && !out(ox, oy) && out(x, y))) && n < 60){
@@ -918,7 +961,7 @@ function placePins(){
     }
     placed.push([x,y]);
     if(Math.hypot(x-ox, y-oy) > 8)
-      leads += `<g class="${kc(s)}"><line x1="${ox.toFixed(1)}" y1="${oy.toFixed(1)}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}"/><circle cx="${ox.toFixed(1)}" cy="${oy.toFixed(1)}" r="2.6"/></g>`;
+      leads += `<g class="${el._cls}"><line x1="${ox.toFixed(1)}" y1="${oy.toFixed(1)}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}"/><circle cx="${ox.toFixed(1)}" cy="${oy.toFixed(1)}" r="2.6"/></g>`;
     el.style.left = x + "px";
     el.style.top  = y + "px";
     el.dataset.sx = x; el.dataset.sy = y;
@@ -972,25 +1015,69 @@ function placeLabels(box){
 function syncMap(list){
   const box = document.getElementById("illmap");
   if(!box || !box.querySelector("svg:not(.compass):not(.leads)")) return;
-
-  box.querySelectorAll(".pin:not(.venue), .plabel").forEach(p => p.remove());
-  hideTip();
-
   CURRENT = list.filter(s => s.lat && s.lng);
+  measure();
+  buildMarkers();
+}
 
+/* 画面の上で近すぎるスポットは、ひとつの丸（数字）にまとめる。
+   拡大するとまとまりがほどけるので、倍率が変わったときだけ作り直す */
+let MARK_K = -1;
+
+function buildMarkers(){
+  const box = document.getElementById("illmap");
+  if(!box || !W0) return;
+  box.querySelectorAll(".pin:not(.venue), .cpin, .plabel").forEach(p => p.remove());
+  hideTip();
+  MARK_K = view.k;
+
+  const D = view.k >= 1.4 ? 24 : 16;              /* これより近いものはまとめる(px) */
+  const sx = s => px(s.lng) / MAPW * W0 * view.k;
+  const sy = s => py(s.lat) / MAPH * H0 * view.k;
+
+  const groups = [];
   CURRENT.forEach(s => {
-    const el = document.createElement("div");
-    el.className = "pin " + kc(s);
-    if(PIN_MARK === "icon"){ el.innerHTML = icon(s.cat); el.title = pad(s.no) + " " + s.name; }
-    else el.textContent = pad(s.no);
-    el.dataset.name = s.name;
-    el.addEventListener("click", () => showTip(s, el));
-    box.appendChild(el);
-
-    /* 地図には名前を出さない。カテゴリはピンの色で見せ、名前はタップした詳細で出す */
+    const x = sx(s), y = sy(s);
+    const g = groups.find(g => Math.hypot(g.x - x, g.y - y) < D);
+    if(g){
+      g.items.push(s);
+      g.x = (g.x * (g.items.length - 1) + x) / g.items.length;
+      g.y = (g.y * (g.items.length - 1) + y) / g.items.length;
+    } else groups.push({ x, y, items:[s] });
   });
 
-  measure();
+  groups.forEach(g => {
+    if(g.items.length === 1){
+      const s = g.items[0];
+      const el = document.createElement("div");
+      el.className = "pin " + kc(s);
+      if(PIN_MARK === "icon"){ el.innerHTML = icon(s.cat); el.title = pad(s.no) + " " + s.name; }
+      else el.textContent = pad(s.no);
+      el.dataset.name = s.name;
+      el._pt = { lng:s.lng, lat:s.lat };
+      el._cls = kc(s);
+      el.addEventListener("click", () => showTip(s, el));
+      box.appendChild(el);
+      return;
+    }
+    const el = document.createElement("div");
+    const one = g.items.every(s => s.cat === g.items[0].cat) ? kc(g.items[0]) : "";
+    el.className = "cpin " + one;
+    if(one) el.classList.add("solo");
+    el.textContent = g.items.length;
+    el.title = g.items.map(s => s.name).join("、");
+    el._pt = {
+      lng: g.items.reduce((a,s) => a + s.lng, 0) / g.items.length,
+      lat: g.items.reduce((a,s) => a + s.lat, 0) / g.items.length,
+    };
+    el._cls = one || "k-etc";
+    el.addEventListener("click", () => {
+      const cx = +el.dataset.sx, cy = +el.dataset.sy;
+      zoomAt(Math.min(6, view.k * 2.2), cx, cy);
+    });
+    box.appendChild(el);
+  });
+
   placePins();
 }
 
@@ -1090,7 +1177,7 @@ document.getElementById("resetBtn").addEventListener("click", () => {
 });
 
 document.getElementById("mapHint").textContent = PIN_MARK === "icon"
-  ? "マークはカテゴリです（上のボタンと同じ）。タップすると紹介が開きます。2本指でひろげると拡大できます。"
+  ? "マークはカテゴリです（上のボタンと同じ）。タップすると紹介が開きます。数字の丸は、近くのお店がまとまっているしるし。押すとひろがります。"
   : "番号の色はカテゴリです（上のボタンと同じ）。タップすると紹介が開きます。2本指でひろげると拡大できます。";
 buildFilters();
 buildMap();   /* 中で render() を呼ぶ */
