@@ -154,6 +154,10 @@ body.onlymap .mapsec{padding:10px 0 12px}
 .list .hd .r{display:flex;align-items:baseline;gap:var(--s2)}
 #resetBtn{background:none;border:0;border-bottom:1px solid var(--ink3);font-family:var(--jp);font-size:12px;color:var(--ink2);cursor:pointer;padding:0 0 1px}
 .grid{display:grid;gap:12px}
+.ghd{grid-column:1/-1;display:flex;align-items:center;gap:12px;margin:14px 0 2px;
+  font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--sea)}
+.ghd::after{content:"";flex:1;height:1px;background:#e0ddd3;opacity:.9}
+.grid > .ghd:first-child{margin-top:0}
 @media(min-width:900px){.grid{grid-template-columns:1fr 1fr}}
 .cell{display:grid;grid-template-columns:24px 1fr;column-gap:10px;border:2px solid var(--ink);border-radius:3px;padding:18px 20px 18px 16px;cursor:pointer;background:var(--bg);transition:background .15s,color .15s}
 .cell > *{grid-column:2}
@@ -357,7 +361,6 @@ const SPOTS = [
 ];
 
 const NAMES = { h:"広明", e:"絵梨香", both:"ふたり" };
-SPOTS.forEach((s,i) => s.no = i + 1);                 /* 地図と一覧で共通の番号 */
 const pad = n => String(n).padStart(2, "0");
 
 /* エリア：南から北の順。まとめボタン（南部・中部・北部）と市町村 */
@@ -367,6 +370,12 @@ const REGION = {
   "北部":["名護市","本部町","大宜味村","東村"],
 };
 const CITIES = [].concat(REGION["南部"], REGION["中部"], REGION["北部"]);
+const CITY_ORDER = {}; CITIES.forEach((c,i) => CITY_ORDER[c] = i);
+const cityRegion = c => Object.keys(REGION).find(r => REGION[r].includes(c)) || "";
+
+/* 一覧・番号は南から北の順。同じ市町村の中は書いた順のまま */
+SPOTS.sort((a,b) => (CITY_ORDER[a.city] ?? 99) - (CITY_ORDER[b.city] ?? 99));
+SPOTS.forEach((s,i) => s.no = i + 1);                 /* 地図と一覧で共通の番号 */
 /* カテゴリの色（CSSの .k-〇〇 と対応） */
 const KCLS = { "ごはん":"k-food", "カフェ":"k-cafe", "自然":"k-nat", "体験":"k-exp", "買い物":"k-shop", "その他":"k-etc" };
 const kc = s => KCLS[s.cat] || "k-etc";
@@ -419,13 +428,19 @@ function render(){
   const list = SPOTS.filter(s => (!state.cat || s.cat === state.cat) && inArea(s));
   const filtered = !!(state.cat || state.region);
 
-  document.getElementById("cards").innerHTML = list.map(s => `
+  let lastRegion = "";
+  document.getElementById("cards").innerHTML = list.map(s => {
+    const r = cityRegion(s.city);
+    const head = (!state.region && r && r !== lastRegion) ? `<h3 class="ghd">${r}</h3>` : "";
+    lastRegion = r;
+    return head + `
     <article class="cell" data-name="${esc(s.name)}">
       <div class="no ${kc(s)}">${pad(s.no)}</div>
       <h3>${s.name}</h3>
       <div class="m">${s.city} ／ <b class="${kc(s)}">${icon(s.cat)}${s.cat}</b></div>
       <p>${s.comment || ""}</p>
-    </article>`).join("");
+    </article>`;
+  }).join("");
 
   document.getElementById("empty").hidden = list.length > 0;
   document.getElementById("count").textContent = filtered ? `${list.length} / ${SPOTS.length}` : `${SPOTS.length} PLACES`;
