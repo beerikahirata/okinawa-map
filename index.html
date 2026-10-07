@@ -99,6 +99,14 @@ body.onlymap .mapsec{padding:10px 0 12px}
 .mapsec .hd span{color:var(--sea);opacity:.6}
 .mapbox{margin-top:var(--s3);border-radius:14px;overflow:hidden;background:var(--sea-pale);border:2px solid #fff}
 .maphint{margin-top:var(--s2);font-size:12px;line-height:1.9;color:#6f8b8c}
+.gmapbtn{margin-top:var(--s3);display:inline-flex;align-items:center;gap:10px;max-width:100%;
+  border:1px solid #bfd8d6;border-radius:30px;background:#fff;padding:10px 18px 10px 14px;
+  text-decoration:none;color:var(--sea);transition:background .15s}
+.gmapbtn svg{flex:0 0 auto;width:19px;height:19px;fill:none;stroke:var(--sea);stroke-width:1.7;
+  stroke-linecap:round;stroke-linejoin:round}
+.gmapbtn span{display:flex;flex-direction:column;font-size:13px;font-weight:700;letter-spacing:.03em}
+.gmapbtn b{margin-top:2px;font-size:11px;font-weight:500;letter-spacing:.02em;color:#6f8b8c}
+@media(hover:hover){.gmapbtn:hover{background:#eef6f5}}
 
 .illmap{
   position:relative;width:100%;aspect-ratio:724/900;overflow:hidden;
@@ -257,6 +265,10 @@ footer .c{margin-top:var(--s4);font-size:10px;opacity:.4}
   <div class="hd"><h2>地図</h2><span>THE MAP</span></div>
   <div class="mapbox"><div class="illmap" id="illmap"></div></div>
   <p class="maphint" id="mapHint"></p>
+  <a class="gmapbtn" href="https://www.google.com/maps/d/viewer?mid=1wGzL0paoG4vkcsou38G9CFgIh-5ux3s" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.4 7-11.5A7 7 0 0 0 5 9.5C5 14.6 12 21 12 21z"/><circle cx="12" cy="9.3" r="2.4"/></svg>
+    <span>Googleマップで開く<b>62か所ぜんぶ入った地図。経路も出せます</b></span>
+  </a>
 </div></section>
 
 <section class="list"><div class="wrap">
