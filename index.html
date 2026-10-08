@@ -99,14 +99,16 @@ body.onlymap .mapsec{padding:10px 0 12px}
 .mapsec .hd span{color:var(--sea);opacity:.6}
 .mapbox{margin-top:var(--s3);border-radius:14px;overflow:hidden;background:var(--sea-pale);border:2px solid #fff}
 .maphint{margin-top:var(--s2);font-size:12px;line-height:1.9;color:#6f8b8c}
-.gmapbtn{margin-top:var(--s3);display:inline-flex;align-items:center;gap:10px;max-width:100%;
-  border:1px solid #bfd8d6;border-radius:30px;background:#fff;padding:10px 18px 10px 14px;
-  text-decoration:none;color:var(--sea);transition:background .15s}
-.gmapbtn svg{flex:0 0 auto;width:19px;height:19px;fill:none;stroke:var(--sea);stroke-width:1.7;
+.gmapbtn{margin-top:var(--s3);display:flex;align-items:center;justify-content:center;gap:12px;
+  border:0;border-radius:40px;background:var(--sea);padding:16px 24px;
+  text-decoration:none;color:#fff;box-shadow:0 4px 14px rgba(31,111,120,.28);
+  transition:transform .15s,box-shadow .15s,background .15s}
+.gmapbtn svg{flex:0 0 auto;width:23px;height:23px;fill:none;stroke:#fff;stroke-width:1.8;
   stroke-linecap:round;stroke-linejoin:round}
-.gmapbtn span{display:flex;flex-direction:column;font-size:13px;font-weight:700;letter-spacing:.03em}
-.gmapbtn b{margin-top:2px;font-size:11px;font-weight:500;letter-spacing:.02em;color:#6f8b8c}
-@media(hover:hover){.gmapbtn:hover{background:#eef6f5}}
+.gmapbtn span{display:flex;flex-direction:column;font-size:15px;font-weight:700;letter-spacing:.04em}
+.gmapbtn b{margin-top:3px;font-size:11.5px;font-weight:500;letter-spacing:.02em;color:rgba(255,255,255,.78)}
+@media(hover:hover){.gmapbtn:hover{background:#1a5f67;transform:translateY(-1px);box-shadow:0 7px 18px rgba(31,111,120,.34)}}
+@media(min-width:900px){.gmapbtn{max-width:420px;margin-left:auto;margin-right:auto}}
 
 .illmap{
   position:relative;width:100%;aspect-ratio:724/900;overflow:hidden;
@@ -279,7 +281,7 @@ footer .c{margin-top:var(--s4);font-size:10px;opacity:.4}
   <p class="maphint" id="mapHint"></p>
   <a class="gmapbtn" href="https://www.google.com/maps/d/viewer?mid=1wGzL0paoG4vkcsou38G9CFgIh-5ux3s" target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.4 7-11.5A7 7 0 0 0 5 9.5C5 14.6 12 21 12 21z"/><circle cx="12" cy="9.3" r="2.4"/></svg>
-    <span>Googleマップで開く<b>経路を出したいときはこちら</b></span>
+    <span>Googleマップで開く<b>経路や保存はこちらから</b></span>
   </a>
 </div></section>
 
