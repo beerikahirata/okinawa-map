@@ -158,6 +158,18 @@ body.onlymap .mapsec{padding:10px 0 12px}
   font-family:var(--en);font-weight:700;font-size:11px;cursor:pointer;
   box-shadow:0 1px 5px rgba(20,60,64,.3);-webkit-tap-highlight-color:transparent}
 .cpin.solo{background:var(--cg,var(--sea))}
+.ghd2{font-size:15px;font-weight:700;letter-spacing:.04em;margin-bottom:var(--s2)}
+.glist{display:flex;flex-direction:column;gap:2px;max-height:52vh;overflow-y:auto;margin:0 -6px}
+.grow{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;cursor:pointer;
+  background:none;border:0;border-radius:8px;padding:11px 6px;font-family:var(--jp);color:var(--ink)}
+.grow + .grow{border-top:1px solid #efece3}
+@media(hover:hover){.grow:hover{background:#f4f1e9}}
+.grow .gno{flex:0 0 auto;font-family:var(--en);font-weight:700;font-size:11px;padding-top:3px;color:var(--cg,var(--sea))}
+.gtxt{display:flex;flex-direction:column;min-width:0}
+.gname{font-size:14px;font-weight:700;line-height:1.5}
+.gmeta{margin-top:2px;font-size:11px;font-weight:500;letter-spacing:.04em;color:var(--ink3)}
+.gmeta b{color:var(--cg,var(--sea))}
+.gmeta .ic{width:11px;height:11px;vertical-align:-1px;margin-right:2px}
 .cpin::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--cg,var(--sea));opacity:.35}
 .illmap.detail .cpin{width:29px;height:29px;font-size:12px}
 .pin.venue{width:34px;height:34px;background:#fff;border:3px solid var(--ink);color:var(--ink);
@@ -313,7 +325,7 @@ const SPOTS = [
     lat:26.605425, lng:127.971848, gmap:"https://maps.app.goo.gl/8s8DZ7331zFu2Bvm9",
     comment:"名護にある、公園みたいに誰でも自由に使えるコミュニティスペース。本を読んでも、卓球をしても、ただ座っているだけでもいい場所です。フリーマーケットやミュージックナイト、ワークショップも開かれています。火〜土 10:00〜21:00 ／ 日 10:00〜18:00、月曜休み。", tags:["誰でも入れる","イベントあり","月曜休み"], min:120, todo:false },
   { name:"果報バンタ", city:"うるま市", area:"中部", cat:"自然", when:["前日","翌日"], by:"both",
-    lat:26.372847, lng:127.989555, gmap:"https://maps.app.goo.gl/RTPuzpCKofyFdG6bA",
+    lat:26.3606732, lng:127.9922613, gmap:"https://maps.app.goo.gl/RTPuzpCKofyFdG6bA",
     comment:"下に降りることはできませんが、高台から「これぞ沖縄の海」という絶景が見られます。", tags:["絶景"], min:80, todo:false },
   { name:"ウクン浜（ウクの浜）", city:"うるま市", area:"中部", cat:"自然", when:["前日","翌日"], by:"h",
     lat:26.367086, lng:127.989365, gmap:"https://maps.app.goo.gl/AtpGMwTRX8Bkjqfz8", web:"https://www.otv.co.jp/okitive/article/38119/",
@@ -1214,10 +1226,8 @@ function buildMarkers(){
       lat: g.items.reduce((a,s) => a + s.lat, 0) / g.items.length,
     };
     el._cls = one || "k-etc";
-    el.addEventListener("click", () => {
-      const cx = +el.dataset.sx, cy = +el.dataset.sy;
-      zoomAt(Math.min(6, view.k * 2.2), cx, cy);
-    });
+    el._items = g.items;
+    el.addEventListener("click", () => openGroupSheet(el._items));
     box.appendChild(el);
   });
 
@@ -1226,6 +1236,36 @@ function buildMarkers(){
 
 /* ================= スポットの詳細シート ================= */
 const esc = t => String(t).replace(/"/g, "&quot;");
+
+/* まとまり（数字の丸）を押したときに出す、中身の一覧 */
+function openGroupSheet(items){
+  const sheet = document.getElementById("sheet"), bg = document.getElementById("sheetBg");
+  sheet.innerHTML = `
+    <div class="grab"></div>
+    <div class="body">
+      <h3 class="ghd2">このあたりの ${items.length} か所</h3>
+      <div class="glist">
+        ${items.map(s => `
+          <button class="grow" type="button" data-name="${esc(s.name)}">
+            <span class="gno ${kc(s)}">${pad(s.no)}</span>
+            <span class="gtxt">
+              <span class="gname">${s.name}</span>
+              <span class="gmeta">${s.city} ／ <b class="${kc(s)}">${icon(s.cat)}${s.cat}</b></span>
+            </span>
+          </button>`).join("")}
+      </div>
+      <div class="acts">
+        <button class="close" type="button">閉じる</button>
+      </div>
+    </div>`;
+  sheet.hidden = false; bg.hidden = false;
+  void sheet.offsetHeight;
+  sheet.classList.add("on"); bg.classList.add("on");
+  document.body.style.overflow = "hidden";
+  sheet.querySelector(".close").addEventListener("click", closeSheet);
+  sheet.querySelectorAll(".grow").forEach(b =>
+    b.addEventListener("click", () => openSheet(b.dataset.name)));
+}
 
 function openSheet(name){
   const s = SPOTS.find(x => x.name === name);
@@ -1320,7 +1360,7 @@ document.getElementById("resetBtn").addEventListener("click", () => {
 });
 
 document.getElementById("mapHint").textContent = PIN_MARK === "icon"
-  ? "マークはカテゴリです（上のボタンと同じ）。タップすると紹介が開きます。数字の丸は、近くのお店がまとまっているしるし。押すとひろがります。"
+  ? "マークはカテゴリです（上のボタンと同じ）。タップすると紹介が開きます。数字の丸は、近くのお店がまとまっているしるし。押すと中身が出ます。"
   : "番号の色はカテゴリです（上のボタンと同じ）。タップすると紹介が開きます。2本指でひろげると拡大できます。";
 buildFilters();
 buildMap();   /* 中で render() を呼ぶ */
