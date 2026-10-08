@@ -1010,7 +1010,9 @@ function setupZoom(box){
   let pts = new Map(), lastD = 0, lastMid = null, moved = 0;
 
   box.addEventListener("pointerdown", e => {
-    if(e.target.closest(".tip") || e.target.closest(".mapctl")) return;
+    /* ピンやまとまりの上から始まったときは、地図を動かさずタップを通す（パソコンのクリック対策） */
+    if(e.target.closest(".tip") || e.target.closest(".mapctl")
+       || e.target.closest(".pin") || e.target.closest(".cpin")) return;
     box.setPointerCapture(e.pointerId);
     pts.set(e.pointerId, [e.clientX, e.clientY]);
     moved = 0; lastD = 0; lastMid = null;
